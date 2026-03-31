@@ -1,0 +1,106 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+:root {
+	--black: #404231;
+
+	/*c1*/
+	--1c0: #7a8963;
+	 --1c7: #5c674a;
+	
+	/*c2*/
+	--2c1: #caccbc;
+	
+	/*c3*/
+	 --3c-2: #f9e8d3;
+	 --3c5: #a58154;
+	 --3c6: #8d6e48;
+	  --3c8: #5e4930;
+	
+	/*c4*/
+	 --4c0: #ececdc;
+	
+	/*c5*/
+	 
+}
+
+
+body {
+  font-family: "Inter", sans-serif;
+  padding: 0 20px;
+  background: var(--3c5);
+  color: var(--3c8);
+  justify-content: center;
+}
+  
+
+.fixed-image-container {
+	position: fixed;
+	top: 3em;
+	right: 0;
+	width: 60%; /* Adjust the width as needed */
+	height: 100vh;
+	overflow: hidden;
+	transition: opacity 0.5s;
+}
+
+/* The fixed image */
+.fixed-image {
+	width: 100%;
+	height: auto;
+	object-fit: cover;
+}
+
+
+.location-card {
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	margin: 20px;
+	padding: 15px;
+	background-color: var(--4c0);
+	width: 400px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s;
+}
+
+.location-card:hover {
+	transform: scale(1.05);
+}
+
+.location-name {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.general-info {
+	font-size: 16px;
+	margin-bottom: 20px;
+}
+
+.important-places {
+	font-size: 18px;
+}
+
+.place-list {
+	margin-top: 10px;
+}
+
+.place-list-item {
+	list-style: disc;
+	margin-left: 20px;
+}
+
+.hover-image {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: opacity 0.5s;
+}
+
+.location-card:hover  .fixed-image-container .hover-image	 {
+	filter: grayscale(100%);
+}

@@ -1,0 +1,236 @@
+.action-item {
+  border: 1px solid var(--2c1);
+  border-radius: 5px;
+  padding: 0.75em 0.85em;
+  background: var(--4c0);
+  position: relative;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.action-item.clickable {
+  cursor: pointer;
+}
+
+.action-item.clickable:hover {
+  border-color: var(--3c5);
+  background: var(--3c-2);
+}
+
+.action-item.passive {
+  border-style: dashed;
+  border-color: var(--2c1);
+  background: #f7efe0;
+}
+
+.action-item.core {
+  border-color: #8f949c;
+  background: linear-gradient(180deg, #f1f2f4 0%, #e4e7eb 100%);
+}
+
+.action-item.core .action-name {
+  color: #2e3238;
+}
+
+.action-item.core .action-desc {
+  color: #4e5560;
+}
+
+.action-item.core .action-rule {
+  color: #2a2f36;
+}
+
+.action-item.command {
+  border-color: #7a6c3a;
+  background: linear-gradient(180deg, #fdf6e3 0%, #f0e6c8 100%);
+}
+
+.action-item.command .action-name {
+  color: #4a3f20;
+}
+
+.action-item.command .action-desc {
+  color: #5e5430;
+}
+
+.action-item.command .action-rule {
+  color: #3a3318;
+}
+
+.action-item.command-blocked {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.action-item.used {
+  opacity: 0.4;
+}
+
+.action-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4em;
+  margin-bottom: 0.35em;
+  flex-wrap: wrap;
+}
+
+.action-name {
+  font-weight: 700;
+  color: var(--3c8);
+  font-size: 0.9rem;
+  flex: 1;
+  line-height: 1.3;
+}
+
+.command-point-cost {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  background: #d4a017;
+  color: #fff;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.casting-value {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  background: #5b5ea6;
+  color: #fff;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.chanting-value {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15em 0.5em;
+  border-radius: 999px;
+  background: #8b6914;
+  color: #fff;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+
+.action-badges {
+  display: flex;
+  gap: 0.3em;
+  flex-shrink: 0;
+}
+
+.badge {
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 0.2em 0.55em;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.badge.type-activated {
+  background: var(--3c5);
+  color: white;
+}
+
+.badge.type-passive {
+  background: var(--1c0);
+  color: white;
+}
+
+.badge.limit {
+  background: var(--3c8);
+  color: white;
+}
+
+.badge.core {
+  background: #6c727d;
+  color: #f3f4f6;
+}
+
+.badge.command-badge {
+  background: #8b7332;
+  color: #fdf6e3;
+}
+
+.badge.core-toggle {
+  border: 0;
+  cursor: pointer;
+  background: #8a9099;
+  color: #f3f4f6;
+}
+
+.badge.core-toggle:hover {
+  background: #757c86;
+}
+
+.badge.core-toggle:focus-visible {
+  outline: 2px solid #4d5662;
+  outline-offset: 2px;
+}
+
+.action-desc {
+  font-size: 0.78rem;
+  color: #6b5a48;
+  margin: 0 0 0.45em;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.action-rule {
+  font-size: 0.78rem;
+  color: var(--black);
+  margin-top: 0.3em;
+  line-height: 1.4;
+}
+
+.rule-label {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-right: 0.3em;
+  padding: 0.1em 0.45em;
+  border-radius: 3px;
+}
+
+.action-rule.declare .rule-label {
+  background: var(--2c1);
+  color: var(--black);
+}
+
+.action-rule.effect .rule-label {
+  background: var(--3c6);
+  color: white;
+}
+
+.core-collapsed-note {
+  margin: 0;
+  font-size: 0.72rem;
+  color: #4e5560;
+  font-style: italic;
+}
+
+.used-banner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(94, 73, 48, 0.55);
+  color: var(--3c-2);
+  font-weight: 900;
+  font-size: 1.3rem;
+  letter-spacing: 0.15em;
+  border-radius: 4px;
+  pointer-events: none;
+}

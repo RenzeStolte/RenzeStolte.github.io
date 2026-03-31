@@ -1,0 +1,87 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+:root {
+	--black: #404231;
+
+	/*c1*/
+	--1c0: #7a8963;
+	 --1c7: #5c674a;
+	
+	/*c2*/
+	--2c1: #caccbc;
+	
+	/*c3*/
+	 --3c-2: #f9e8d3;
+	 --3c5: #a58154;
+	 --3c6: #8d6e48;
+	  --3c8: #5e4930;
+	
+	/*c4*/
+	 --4c0: #ececdc;
+	
+	/*c5*/
+	 
+}
+
+
+body {
+  font-family: "Inter", sans-serif;
+  padding: 0 20px;
+  background: var(--2c1);
+  color: var(--3c8);
+  justify-content: center;
+}
+  
+header {
+	text-align: center;
+	padding: 20px 0;
+	background-color: #333;
+	color: #fff;
+}
+
+section {
+	max-width: 800px;
+	margin: 20px auto;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.summary {
+	margin-bottom: 3em;
+}
+
+form {
+	max-width: 600px;
+	margin: 20px auto;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+	display: block;
+	margin-bottom: 8px;
+}
+
+input, textarea {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 16px;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+button {
+	background-color: #333;
+	color: #fff;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	
+}

@@ -1,0 +1,32 @@
+<div class="weapons-section">
+  <div class="section-title">Weapons</div>
+  <div class="weapons-list">
+    @for (weapon of weapons; track weapon.name) {
+      <div class="weapon-item">
+        <div class="weapon-topline">
+          <span class="weapon-name">{{ weapon.name }}</span>
+          <span class="weapon-type" [class.ranged]="weapon.type === 'ranged'">
+            {{ weapon.type }}
+          </span>
+        </div>
+        <div class="weapon-stats">
+          @if (weapon.range) {
+            <span class="stat-range">Rng {{ weapon.range }}</span>
+          }
+          <span>Atk {{ weapon.attacks }}</span>
+          <span>Hit {{ weapon.hit }}</span>
+          <span>Wnd {{ weapon.wound }}</span>
+          <span>Rnd {{ weapon.rend }}</span>
+          <span>Dmg {{ weapon.damage }}</span>
+        </div>
+        @if (weapon.abilities && weapon.abilities.length > 0) {
+          <div class="weapon-abilities">
+            @for (ability of weapon.abilities; track ability) {
+              <span class="weapon-ability-tag">{{ ability }}</span>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

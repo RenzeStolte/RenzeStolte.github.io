@@ -1,0 +1,183 @@
+@if (isSelectingArmy) {
+<app-faction-select
+  [armies]="availableArmies"
+  (armySelected)="selectArmy($event)">
+</app-faction-select>
+} @else if (isSettingUp) {
+<app-army-setup
+  [army]="setupArmy!"
+  (setupComplete)="completeSetup($event)"
+  (back)="cancelSetup()">
+</app-army-setup>
+} @else {
+<div class="tracker">
+
+  <header class="tracker-header">
+    <div class="header-faction">{{ army!.faction }}</div>
+    <h1 class="header-army">{{ army!.name }}</h1>
+    <div class="header-bottom">
+      <span class="round-badge">Battle Round {{ battleRound }}</span>
+      <div class="command-points">
+        <span class="command-points-label">Command Points</span>
+        <div class="command-points-controls">
+          <button class="cp-btn" (click)="adjustCommandPoints(-1)" [disabled]="commandPoints === 0">−</button>
+          <span class="cp-value">{{ commandPoints }}</span>
+          <button class="cp-btn" (click)="adjustCommandPoints(1)">+</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="phase-bar-shell"
+       [class.left-overflow]="phaseBarOverflowLeft"
+       [class.right-overflow]="phaseBarOverflowRight">
+    <div class="phase-bar" #phaseBar (scroll)="onPhaseBarScroll()">
+      @for (step of allSteps; track step.key) {
+        <div class="phase-step"
+             [class.active]="step.active"
+             [class.completed]="step.completed"
+             [class.clickable]="true"
+             role="button"
+             tabindex="0"
+             (click)="goToStep(step.key)"
+             (keydown.enter)="goToStep(step.key)"
+             (keydown.space)="goToStep(step.key); $event.preventDefault()">
+          <div class="phase-connector"></div>
+          <div class="phase-dot"></div>
+          <span class="phase-label">{{ step.label }}</span>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="phase-info">
+    <h2 class="phase-title">{{ currentPhaseLabel }}</h2>
+    @if (isPicking) {
+      <p class="turn-note">Who has priority this round?</p>
+      <div class="priority-picker">
+        <button class="priority-btn" (click)="pickPriority(true)">
+          ⚔ You Go First
+        </button>
+        <button class="priority-btn" (click)="pickPriority(false)">
+          🛡 Opponent Goes First
+        </button>
+      </div>
+    } @else if (stage.type === 'deployment') {
+      <p class="turn-note">Set up units and use any deployment abilities before choosing priority.</p>
+    } @else if (stage.type === 'startActions') {
+      <p class="turn-note">Resolve start of battle round abilities before the first turn begins.</p>
+    } @else if (stage.type === 'turn') {
+      <div class="turn-indicator">
+        <span class="turn-badge" [class.own]="isOwnTurn" [class.opponent]="!isOwnTurn">
+          {{ turnOwnerLabel }}
+        </span>
+        <span class="sub-step-label">
+          ({{ playerLabel }})
+        </span>
+      </div>
+    } @else {
+      <p class="turn-note">Both players act — round complete</p>
+    }
+  </div>
+
+  @if (armyWideActions.length > 0) {
+    <div class="army-actions">
+      <h3 class="army-actions-title">Army Abilities</h3>
+      <div class="army-actions-list">
+        @for (action of armyWideActions; track action.name) {
+          <app-action-card
+            [action]="action"
+            [used]="false"
+            [clickable]="false"
+            [defaultCoreExpanded]="true"
+            [showCoreToggle]="false">
+          </app-action-card>
+        }
+      </div>
+    </div>
+  }
+
+  @if (showUnits) {
+  <div class="units-grid">
+    @for (unit of army!.units; track unit.name) {
+      <div class="unit-card">
+        <div class="unit-header">
+          <div class="unit-header-left">
+            <h3 class="unit-name">{{ unit.name }}</h3>
+            <div class="keywords">
+              @for (kw of unit.keywords; track kw) {
+                <span class="keyword">{{ kw }}</span>
+              }
+            </div>
+            <button class="warscroll-btn" (click)="openWarscroll(unit)">View warscroll</button>
+          </div>
+          <div class="unit-header-diamond">
+            <svg viewBox="0 0 120 120" class="unit-diamond-svg">
+              <defs>
+                <clipPath [attr.id]="'clip-' + unit.name">
+                  <circle cx="60" cy="60" r="56"/>
+                </clipPath>
+              </defs>
+              <circle cx="60" cy="60" r="56" fill="#2b4a3f" stroke="#1d3a30" stroke-width="2.5"/>
+              <circle cx="60" cy="60" r="54" fill="none" stroke="#4a7a65" stroke-width="0.8" opacity="0.5"/>
+              <line x1="10" y1="10" x2="110" y2="110" stroke="#1d3a30" stroke-width="1.8" [attr.clip-path]="'url(#clip-' + unit.name + ')'"/>
+              <line x1="110" y1="10" x2="10" y2="110" stroke="#1d3a30" stroke-width="1.8" [attr.clip-path]="'url(#clip-' + unit.name + ')'"/>
+              <text x="60" y="22" class="diamond-label">MOVE</text>
+              <text x="15" y="65" class="diamond-label" transform="rotate(-90,15,65)">HEALTH</text>
+              <text x="105" y="65" class="diamond-label" transform="rotate(90,105,65)">SAVE</text>
+              <text x="60" y="110" class="diamond-label">CONTROL</text>
+              <text x="60" y="38" class="diamond-value">{{ unit.characteristics.move }}</text>
+              <text x="30" y="65" class="diamond-value">{{ unit.characteristics.health }}</text>
+              <text x="90" y="65" class="diamond-value">{{ unit.characteristics.save }}</text>
+              <text x="60" y="95" class="diamond-value">{{ unit.characteristics.control }}</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="unit-body">
+          @if (hasAnyActions(unit)) {
+            <div class="actions-list">
+              @for (action of getAvailableActions(unit); track action.name) {
+                <app-action-card
+                  [action]="action"
+                  [used]="isActionUsed(unit, action)"
+                  [clickable]="canToggleAction(unit, action)"
+                  [defaultCoreExpanded]="false"
+                  [showCoreToggle]="action.name.startsWith('Core:') || !!action.isCommand"
+                  (actionToggle)="toggleActionUsed(unit, action)">
+                </app-action-card>
+              }
+            </div>
+          } @else {
+            <div class="no-actions">No actions this phase</div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+  }
+
+  <nav class="phase-nav">
+    @if (!isPicking) {
+    <button class="nav-btn prev-btn"
+            (click)="prevPhase()"
+            [disabled]="!canGoPrev">
+      ← Previous
+    </button>
+    <button class="nav-btn next-btn" (click)="nextPhase()">
+      {{ nextButtonLabel }}
+    </button>
+    }
+  </nav>
+
+</div>
+
+@if (warscrollUnit) {
+  <div class="warscroll-modal-backdrop" (click)="closeWarscroll()">
+    <div class="warscroll-modal" role="dialog" aria-modal="true" aria-label="Unit warscroll" (click)="$event.stopPropagation()">
+      <button class="warscroll-close" type="button" (click)="closeWarscroll()">Close</button>
+      <app-unit-details [unit]="warscrollUnit"></app-unit-details>
+    </div>
+  </div>
+}
+}

@@ -1,0 +1,73 @@
+<section class="unit-details">
+  <header class="unit-details-header">
+    <div class="header-left">
+      <h2 class="unit-details-title">{{ unit.name }}</h2>
+      <div class="keywords">
+        @for (kw of unit.keywords; track kw) {
+          <span class="keyword">{{ kw }}</span>
+        }
+      </div>
+    </div>
+    @if (unit.characteristics) {
+      <div class="characteristics-diamond">
+        <svg viewBox="0 0 120 120" class="diamond-svg">
+          <defs>
+            <clipPath id="circleClip">
+              <circle cx="60" cy="60" r="56"/>
+            </clipPath>
+          </defs>
+
+          <!-- Outer circle -->
+          <circle cx="60" cy="60" r="56" fill="#2b4a3f" stroke="#1d3a30" stroke-width="2.5"/>
+          <!-- Inner ring -->
+          <circle cx="60" cy="60" r="54" fill="none" stroke="#4a7a65" stroke-width="0.8" opacity="0.5"/>
+
+          <!-- X dividers -->
+          <line x1="10" y1="10" x2="110" y2="110" stroke="#1d3a30" stroke-width="1.8" clip-path="url(#circleClip)"/>
+          <line x1="110" y1="10" x2="10" y2="110" stroke="#1d3a30" stroke-width="1.8" clip-path="url(#circleClip)"/>
+
+          <!-- Labels between border and values -->
+          <text x="60" y="22" class="diamond-label">MOVE</text>
+          <text x="15" y="65" class="diamond-label" transform="rotate(-90,15,65)">HEALTH</text>
+          <text x="105" y="65" class="diamond-label" transform="rotate(90,105,65)">SAVE</text>
+          <text x="60" y="110" class="diamond-label">CONTROL</text>
+
+          <!-- Values -->
+          <text x="60" y="38" class="diamond-value">{{ unit.characteristics.move }}</text>
+          <text x="30" y="65" class="diamond-value">{{ unit.characteristics.health }}</text>
+          <text x="90" y="65" class="diamond-value">{{ unit.characteristics.save }}</text>
+          <text x="60" y="95" class="diamond-value">{{ unit.characteristics.control }}</text>
+        </svg>
+      </div>
+    }
+  </header>
+
+  <app-unit-weapons [weapons]="unit.weapons"></app-unit-weapons>
+
+  <section class="warscroll-actions">
+    <h3 class="section-heading">Warscroll Abilities</h3>
+
+    @for (phase of phaseOrder; track phase) {
+      @if (actionsForPhase(phase).length > 0) {
+        <div class="phase-block">
+          <div class="phase-title">{{ phaseLabels[phase] }}</div>
+          <div class="phase-actions">
+            @for (action of actionsForPhase(phase); track action.name) {
+              <div class="action-meta-row">
+                <span>{{ timingLabel(action) }}</span>
+                <span>{{ usageLabel(action) }}</span>
+              </div>
+              <app-action-card
+                [action]="action"
+                [used]="false"
+                [clickable]="false"
+                [defaultCoreExpanded]="true"
+                [showCoreToggle]="false">
+              </app-action-card>
+            }
+          </div>
+        </div>
+      }
+    }
+  </section>
+</section>

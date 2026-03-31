@@ -1,0 +1,96 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+:root {
+	--black: #404231;
+
+	/*c1*/
+	--1c0: #7a8963;
+	 --1c7: #5c674a;
+	
+	/*c2*/
+	--2c1: #caccbc;
+	
+	/*c3*/
+	 --3c-2: #f9e8d3;
+	 --3c5: #a58154;
+	 --3c6: #8d6e48;
+	  --3c8: #5e4930;
+	
+	/*c4*/
+	 --4c0: #ececdc;
+	
+	/*c5*/
+	 
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+  font-family: 'Oswald', sans-serif;
+}
+
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  padding: 0 20px;
+  background: var(--1c7);
+  color: var(--4c0);
+}
+
+
+.npc-card {
+	border-radius: 8px;
+	margin: 20px;
+	padding: 15px;
+	background-color: var(--3c-2);
+	width: calc(60% - 40px); /* Full width with margin adjustment */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	display: flex;
+	transition: transform 0.3s;
+	margin-left: 20%;
+}
+
+.npc-portrait {
+	width: 15em; /* Adjusted width */
+	height: 100%; /* Fills the height of the card */
+	border-radius: 4px;
+	margin-right: 15px;
+}
+
+.npc-details {
+	flex: 1;
+}
+
+h2 {
+	font-size: 1.4em;
+	font-weight: bold;
+	margin-bottom: 5px;
+	color: var(--3c8);
+}
+
+.npc-details p {
+	font-size: 1em;
+	margin-bottom: 5px;
+	color: var(--3c6);
+}
+
+.npc-description {
+	font-size: 16px;
+	line-height: 1.4;
+}
+
+.npc-card:hover {
+	transform: scale(1.05);
+}

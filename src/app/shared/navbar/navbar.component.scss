@@ -1,0 +1,151 @@
+.header {
+  margin-top: -1.2em;
+  background-image: url("/assets/img/header/Headimg.png");
+  height: 40vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: -48%;
+}
+
+#navbar {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  z-index: 2;
+}
+
+#navbar a {
+  font-size: 1.5vw;
+  float: left;
+  display: block;
+  color: black;
+  background-color: #C6E7CA;
+  text-align: center;
+  width: 10%;
+  height: auto;
+  text-decoration: none;
+}
+
+#navbar .larger{
+  width: 20%;
+  font-size: 1vw;
+}
+
+#stwld{
+  font-family: "Julee", cursive;
+  font-size: 3vw;
+}
+
+#navbar a:hover {
+  color: #5c674a;
+}
+
+#navbar .larger:hover {
+  color:black;
+}
+
+
+/*-----------------------------------------------------------------------------------------*/
+
+.content {
+  display: grid;
+  grid-template-areas:
+    'info info party party party party'
+    'info info party party party party'
+    'info info party party party party'
+    'info info ex ex ex ex';
+  gap: 10px;
+  background-color: #2196F3;
+  padding: 1em;
+  padding-top: 4em;
+  background-color: #CEDAAB;
+}
+
+
+h2{
+  margin-bottom: 1.5em;
+  font-family: "Julee", cursive;
+}
+
+
+div.gallery img {
+  width: 100%;
+  height: auto;
+}
+
+div.desc {
+  padding: 0.5em;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.proffil {
+  padding: 0.2em;
+  margin-left: 0.5em;
+  float: left;
+  width: calc(100%/8);
+  border: #98A07E;
+  border-style: solid;
+  border-width: 1px;
+  border-bottom: -6em;
+}
+
+
+.exproffil {
+  padding: 0 6px;
+  float: left;
+  width: 7em;
+}
+
+
+@media only screen and (max-width: 1200px) {
+  .proffil {
+    width: calc(90%/3);
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .proffil {
+    width: 49.99999%;
+    margin: 6px 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .proffil {
+    width: 100%;
+  }
+}
+
+.party a:link{
+  text-decoration: none;
+  color: black;
+}
+
+.party a:visited{
+  text-decoration: none;
+  color: black;
+}
+
+.party a:hover{
+  text-decoration: none;
+  color: black;
+}
+
+.party a:active{
+  text-decoration: none;
+  color: black;
+}
+
+.body-section {
+  position: sticky;
+  top: 0;
+}

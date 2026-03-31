@@ -1,0 +1,97 @@
+.weapons-section {
+  margin-bottom: 0.8em;
+}
+
+.section-title {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5e5f62;
+  margin-bottom: 0.45em;
+}
+
+.weapons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
+}
+
+.weapon-item {
+  border: 1px solid #c8ccd1;
+  border-radius: 5px;
+  background: #f4f6f8;
+  padding: 0.5em 0.6em;
+}
+
+.weapon-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+.weapon-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #2f3440;
+  line-height: 1.25;
+}
+
+.weapon-type {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.12em 0.5em;
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: #7a8089;
+  color: #f3f4f6;
+  font-weight: 700;
+}
+
+.weapon-type.ranged {
+  background: #58626f;
+}
+
+.weapon-stats {
+  margin-top: 0.35em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em;
+}
+
+.weapon-stats span {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #3f4651;
+  background: #e4e8ee;
+  border: 1px solid #d2d7de;
+  border-radius: 3px;
+  padding: 0.12em 0.38em;
+}
+
+.weapon-stats .stat-range {
+  background: #d6e8df;
+  border-color: #a8c9b5;
+  color: #2b4a3f;
+}
+
+.weapon-abilities {
+  margin-top: 0.35em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25em;
+}
+
+.weapon-ability-tag {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #4a3f20;
+  background: #f0e6c8;
+  border: 1px solid #d4c9a0;
+  border-radius: 3px;
+  padding: 0.1em 0.4em;
+  letter-spacing: 0.02em;
+}

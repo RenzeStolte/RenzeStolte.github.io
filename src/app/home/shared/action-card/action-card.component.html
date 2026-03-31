@@ -1,0 +1,77 @@
+<div class="action-item"
+     [class.used]="used"
+     [class.passive]="action.actionDetails.actionType === 'passive'"
+     [class.core]="isCore"
+     [class.command]="isCommand"
+     [class.command-blocked]="isCommand && !clickable && !used"
+     [class.clickable]="clickable"
+     (click)="onCardClick()">
+  <div class="action-header">
+    <span class="action-name">{{ action.name }}</span>
+    @if (action.commandPointCost) {
+      <span class="command-point-cost">{{ action.commandPointCost }} CP</span>
+    }
+    @if (action.castingValue) {
+      <span class="casting-value">CV {{ action.castingValue }}</span>
+    }
+    @if (action.chantingValue) {
+      <span class="chanting-value">CV {{ action.chantingValue }}</span>
+    }
+    <div class="action-badges">
+      @if (isCommand) {
+        <span class="badge command-badge">Command</span>
+        @if (showCoreToggle) {
+          <button
+            type="button"
+            class="badge core-toggle"
+            [attr.aria-expanded]="coreExpanded"
+            (click)="toggleCoreDetails($event)">
+            {{ coreExpanded ? 'Hide' : 'Expand' }}
+          </button>
+        }
+      }
+      @else if (isCore) {
+        <span class="badge core">Core</span>
+        @if (showCoreToggle) {
+          <button
+            type="button"
+            class="badge core-toggle"
+            [attr.aria-expanded]="coreExpanded"
+            (click)="toggleCoreDetails($event)">
+            {{ coreExpanded ? 'Hide' : 'Expand' }}
+          </button>
+        }
+      }
+      @if (showTypeAndLimit) {
+        <span class="badge type-{{ action.actionDetails.actionType }}">
+          {{ action.actionDetails.actionType }}
+        </span>
+        @if (action.numberOfTimes !== 'unlimited') {
+          <span class="badge limit">
+            {{ action.numberOfTimes === 'once' ? '1x Game' : '1x Round' }}
+          </span>
+        }
+      }
+    </div>
+  </div>
+
+  @if (showDetails) {
+    <p class="action-desc">{{ action.description }}</p>
+    @if (action.actionDetails.actionType === 'activated') {
+      <div class="action-rule declare">
+        <span class="rule-label">Declare</span>
+        {{ actionDeclare }}
+      </div>
+    }
+    <div class="action-rule effect">
+      <span class="rule-label">Effect</span>
+      {{ action.actionDetails.effect }}
+    </div>
+  } @else {
+    <p class="core-collapsed-note">Expand to view declare and effect details.</p>
+  }
+
+  @if (used) {
+    <div class="used-banner">USED</div>
+  }
+</div>

@@ -1,0 +1,78 @@
+.faction-select {
+  min-height: 100vh;
+  background: #0d0a08;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+}
+
+.faction-select-title {
+  font-family: "Cinzel", serif;
+  font-weight: 900;
+  font-size: 2.2rem;
+  color: var(--3c5);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.2em;
+  text-align: center;
+}
+
+.faction-select-subtitle {
+  color: var(--2c1);
+  font-size: 0.9rem;
+  margin: 0 0 2em;
+  text-align: center;
+}
+
+.faction-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25em;
+  width: 100%;
+  max-width: 960px;
+}
+
+.faction-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4em;
+  padding: 2em 1.5em;
+  background: var(--1c7);
+  border: 2px solid var(--3c5);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.faction-card:hover {
+  transform: scale(1.04);
+  border-color: var(--3c-2);
+  background: var(--1c0);
+}
+
+.faction-card-faction {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--3c-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.faction-card-name {
+  font-size: 0.8rem;
+  color: var(--3c5);
+  font-weight: 600;
+  text-align: center;
+}
+
+.faction-card-units {
+  font-size: 0.7rem;
+  color: var(--2c1);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}

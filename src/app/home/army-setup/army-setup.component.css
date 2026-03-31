@@ -1,0 +1,260 @@
+.army-setup {
+  min-height: 100vh;
+  background: #0d0a08;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em 1.5em;
+}
+
+.setup-header {
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+
+.setup-faction {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--3c-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.setup-title {
+  font-family: "Cinzel", serif;
+  font-weight: 900;
+  font-size: 1.8rem;
+  color: var(--3c5);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0.15em 0 0.2em;
+}
+
+.setup-subtitle {
+  color: var(--2c1);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* ── Step indicators ── */
+.step-indicators {
+  display: flex;
+  gap: 0.75em;
+  margin-bottom: 2em;
+}
+
+.step-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--2c1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.step-dot-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--2c1);
+  transition: color 0.15s;
+}
+
+.step-dot.active {
+  border-color: var(--3c-2);
+  background: var(--3c-2);
+}
+
+.step-dot.active .step-dot-num {
+  color: #0d0a08;
+}
+
+.step-dot.completed {
+  border-color: var(--3c5);
+  background: var(--1c0);
+}
+
+.step-dot.completed .step-dot-num {
+  color: var(--3c5);
+}
+
+/* ── Step content ── */
+.step-content {
+  width: 100%;
+  max-width: 720px;
+}
+
+.step-label {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--3c5);
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0 0 1.25em;
+  letter-spacing: 0.06em;
+}
+
+/* ── Option cards ── */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1em;
+}
+
+.option-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  padding: 1.25em;
+  background: var(--1c7);
+  border: 2px solid var(--2c1);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.option-card:hover {
+  border-color: var(--3c5);
+  background: var(--1c0);
+  transform: scale(1.02);
+}
+
+.option-card.selected {
+  border-color: var(--3c-2);
+  background: var(--1c0);
+}
+
+.option-name {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--3c-2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.option-desc {
+  font-size: 0.8rem;
+  color: var(--2c1);
+  line-height: 1.4;
+}
+
+.option-action {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  padding: 0.6em 0.75em;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  margin-top: 0.25em;
+}
+
+.option-action-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--3c5);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.option-action-timing {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--3c-2);
+  font-style: italic;
+}
+
+.option-action-declare {
+  font-size: 0.72rem;
+  color: var(--2c1);
+  line-height: 1.4;
+  font-style: italic;
+}
+
+.option-action-effect {
+  font-size: 0.72rem;
+  color: var(--2c1);
+  line-height: 1.4;
+}
+
+/* ── Hero assignment ── */
+.assign-hint {
+  font-size: 0.85rem;
+  color: var(--2c1);
+  text-align: center;
+  margin: 0 0 1.25em;
+}
+
+.hero-card {
+  align-items: center;
+  padding: 1.5em;
+}
+
+.hero-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35em;
+  justify-content: center;
+}
+
+.hero-keyword {
+  font-size: 0.65rem;
+  color: var(--2c1);
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0.15em 0.5em;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ── Navigation ── */
+.setup-nav {
+  display: flex;
+  gap: 1em;
+  margin-top: 2em;
+  width: 100%;
+  max-width: 720px;
+  justify-content: space-between;
+}
+
+.nav-btn {
+  padding: 0.7em 1.5em;
+  border-radius: 6px;
+  border: 2px solid var(--3c5);
+  background: transparent;
+  color: var(--3c5);
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.nav-btn:hover {
+  background: var(--1c0);
+}
+
+.nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.confirm-btn {
+  border-color: var(--3c-2);
+  color: var(--3c-2);
+}
+
+.confirm-btn:hover:not(:disabled) {
+  background: var(--3c-2);
+  color: #0d0a08;
+}

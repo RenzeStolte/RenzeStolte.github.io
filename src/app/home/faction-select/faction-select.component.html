@@ -1,0 +1,13 @@
+<div class="faction-select">
+  <h1 class="faction-select-title">Choose Your Faction</h1>
+  <p class="faction-select-subtitle">Select an army to begin tracking your battle</p>
+  <div class="faction-grid">
+    @for (a of armies; track a.faction) {
+      <button class="faction-card" (click)="select(a)">
+        <span class="faction-card-faction">{{ a.faction }}</span>
+        <span class="faction-card-name">{{ a.name }}</span>
+        <span class="faction-card-units">{{ a.units.length }} units</span>
+      </button>
+    }
+  </div>
+</div>

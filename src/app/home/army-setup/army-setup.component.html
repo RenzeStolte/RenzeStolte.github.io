@@ -1,0 +1,85 @@
+<div class="army-setup">
+  <header class="setup-header">
+    <span class="setup-faction">{{ army.faction }}</span>
+    <h1 class="setup-title">{{ army.name }}</h1>
+    <p class="setup-subtitle">Customise your army before battle</p>
+  </header>
+
+  <div class="step-indicators">
+    @for (step of steps; track step.category; let i = $index) {
+      <div class="step-dot"
+           [class.active]="i === currentStepIndex"
+           [class.completed]="isStepCompleted(step.category) && i !== currentStepIndex">
+        <span class="step-dot-num">{{ i + 1 }}</span>
+      </div>
+    }
+  </div>
+
+  @if (isChoicePhase && currentStep) {
+    <div class="step-content">
+      <h2 class="step-label">{{ currentStep.label }}</h2>
+
+      <div class="options-grid">
+        @for (opt of currentStep.options; track opt.name) {
+          <button class="option-card"
+                  [class.selected]="isSelected(currentStep.category, opt)"
+                  (click)="selectOption(currentStep.category, opt)">
+            <span class="option-name">{{ opt.name }}</span>
+            <span class="option-desc">{{ opt.description }}</span>
+            @for (action of opt.actions; track action.name) {
+              <span class="option-action">
+                <span class="option-action-name">{{ action.name }}</span>
+                <span class="option-action-timing">{{ action.description }}</span>
+                @if (action.actionDetails.actionType === 'activated') {
+                  <span class="option-action-declare">{{ action.actionDetails.declare }}</span>
+                }
+                <span class="option-action-effect">{{ action.actionDetails.effect }}</span>
+              </span>
+            }
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  @if (isAssignHeroPhase) {
+    <div class="step-content">
+      <h2 class="step-label">{{ assignHeroLabel }}</h2>
+      <p class="assign-hint">Choose which Hero receives this ability</p>
+
+      <div class="options-grid">
+        @for (hero of heroUnits; track hero.name) {
+          <button class="option-card hero-card"
+                  [class.selected]="isBearerSelected(hero.name)"
+                  (click)="selectBearer(hero.name)">
+            <span class="option-name">{{ hero.name }}</span>
+            <span class="hero-keywords">
+              @for (kw of hero.keywords; track kw) {
+                <span class="hero-keyword">{{ kw }}</span>
+              }
+            </span>
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  <nav class="setup-nav">
+    <button class="nav-btn back-btn" (click)="prevStep()">
+      ← {{ currentStepIndex === 0 && isChoicePhase ? 'Back' : 'Previous' }}
+    </button>
+    @if (isLastChoiceStep && !isAssignHeroPhase) {
+      <button class="nav-btn confirm-btn"
+              [disabled]="!canProceed()"
+              (click)="nextStep()">
+        Start Battle ⚔
+      </button>
+    } @else {
+      <button class="nav-btn next-btn"
+              [disabled]="!canProceed()"
+              (click)="nextStep()">
+        Next →
+      </button>
+    }
+  </nav>
+</div>

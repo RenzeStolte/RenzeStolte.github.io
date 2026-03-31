@@ -1,0 +1,110 @@
+.unit-details {
+  color: #221d19;
+}
+
+.unit-details-header {
+  margin-bottom: 0.9em;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75em;
+}
+
+.header-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.unit-details-title {
+  margin: 0 0 0.35em;
+  font-family: "Cinzel", serif;
+  font-size: 1.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #2b1f17;
+}
+
+.keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+}
+
+.keyword {
+  background: #ece2d4;
+  color: #5b4633;
+  font-size: 0.62rem;
+  padding: 0.15em 0.55em;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.characteristics-diamond {
+  flex-shrink: 0;
+}
+
+.diamond-svg {
+  width: 88px;
+  height: 88px;
+}
+
+.diamond-label {
+  font-size: 6.5px;
+  font-weight: 700;
+  fill: #a0c4b0;
+  text-anchor: middle;
+  letter-spacing: 0.12em;
+  font-family: 'Cinzel', serif;
+}
+
+.diamond-value {
+  font-size: 18px;
+  font-weight: 800;
+  fill: #f0e8d8;
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-family: 'Cinzel', serif;
+}
+
+.warscroll-actions {
+  margin-top: 0.6em;
+}
+
+.section-heading {
+  margin: 0 0 0.55em;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #5b4633;
+}
+
+.phase-block {
+  margin-top: 0.75em;
+  border-top: 1px solid #d8ccbc;
+  padding-top: 0.6em;
+}
+
+.phase-title {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b5642;
+  font-weight: 700;
+  margin-bottom: 0.35em;
+}
+
+.phase-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.action-meta-row {
+  display: flex;
+  gap: 0.5em;
+  justify-content: space-between;
+  color: #68503a;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}

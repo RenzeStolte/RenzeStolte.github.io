@@ -577,7 +577,7 @@ const STORMCAST_ARMY: Army = {
             actionType: 'passive',
             effect: 'Add 3 to this unit\'s control score while it is contesting an objective wholly within friendly territory.',
           },
-          phaseActivation: BattlePhase.START,
+          phaseActivation: BattlePhase.END,
           phaseActivationTiming: 'any',
           numberOfTimes: 'unlimited',
         },
@@ -585,41 +585,43 @@ const STORMCAST_ARMY: Army = {
     },
     {
       name: 'Prosecutors',
-      keywords: ['Battleline', 'Infantry', 'Champion', 'Fly', 'Order', 'Stormcast Eternals', 'Ruination Chamber'],
+      keywords: ['Infantry', 'Champion', 'Fly', 'Order', 'Stormcast Eternals', 'Ruination Chamber'],
       characteristics: { move: '12"', save: '3+', health: '2', control: '1' },
       hasRangedWeapons: true,
       weapons: [
         {
           name: 'Celestial Javelin',
           type: 'ranged',
-          attacks: '2',
+          attacks: '1',
           hit: '3+',
           wound: '3+',
-          rend: '-1',
-          damage: '1',
+          rend: '1',
+          damage: 'D3',
+          range: '10"'
         },
         {
-          name: 'Stormcall Spear',
+          name: 'Stormcall Javelin',
           type: 'melee',
-          attacks: '2',
+          attacks: '3',
           hit: '3+',
           wound: '3+',
-          rend: '-1',
+          rend: '1',
           damage: '1',
+          abilities: [ 'Charge (1+ Damage)']
         },
       ],
       actions: [
         {
           name: 'Ruination Chamber',
-          description: 'These veterans march where others cannot tread, resisting even the most corrosive magics.',
+          description: 'These veterans march where others cannot tread, fighting upon battlefields transformed into scenes of apocalypse. Even the most corrosive magics find no purchase on their souls.',
           actionDetails: {
             actionType: 'activated',
             declare: 'Reaction: This unit was picked as the target of a non-Core ability.',
             effect: 'Make a resistance roll of D6. On a 4+, that ability has no effect on this unit.',
           },
-          phaseActivation: BattlePhase.HERO,
-          phaseActivationTiming: 'opponent',
-          numberOfTimes: 'unlimited',
+          phaseActivation: BattlePhase.START,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'perRound',
         },
         {
           name: 'Heralds of Righteousness',
@@ -629,7 +631,7 @@ const STORMCAST_ARMY: Army = {
             effect: 'Add 1 to the number of dice rolled when making charge rolls for this unit, to a maximum of 3.',
           },
           phaseActivation: BattlePhase.CHARGE,
-          phaseActivationTiming: 'own',
+          phaseActivationTiming: 'any',
           numberOfTimes: 'unlimited',
         },
         {
@@ -647,41 +649,42 @@ const STORMCAST_ARMY: Army = {
     },
     {
       name: 'Reclusians',
-      keywords: ['Battleline', 'Infantry', 'Champion', 'Order', 'Stormcast Eternals', 'Ruination Chamber'],
+      keywords: ['Infantry', 'Champion', 'Order', 'Stormcast Eternals', 'Ruination Chamber'],
       characteristics: { move: '5"', save: '3+', health: '3', control: '1' },
       weapons: [
         {
-          name: 'Ruination Weapon',
+          name: 'Rune-blessed Weapons',
           type: 'melee',
           attacks: '3',
           hit: '3+',
           wound: '3+',
-          rend: '-1',
+          rend: '1',
           damage: '2',
+          abilities: ['Crit (Mortal)']
         },
       ],
       actions: [
         {
           name: 'Ruination Chamber',
-          description: 'These veterans march where others cannot tread, resisting even the most corrosive magics.',
+          description: 'These veterans march where others cannot tread, fighting upon battlefields transformed into scenes of apocalypse. Even the most corrosive magics find no purchase on their souls.',
           actionDetails: {
             actionType: 'activated',
             declare: 'Reaction: This unit was picked as the target of a non-Core ability.',
             effect: 'Make a resistance roll of D6. On a 4+, that ability has no effect on this unit.',
           },
-          phaseActivation: BattlePhase.HERO,
-          phaseActivationTiming: 'opponent',
-          numberOfTimes: 'unlimited',
+          phaseActivation: BattlePhase.START,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'perRound',
         },
         {
           name: 'Memorian Descendants',
           description: 'Reclusians are accompanied by Memorians who serve to remind them of their humanity.',
           actionDetails: {
             actionType: 'passive',
-            effect: 'There are 2 Memorians for every 3 models in this unit. While any Memorians are on the battlefield, add 1 to resistance rolls when using the Ruination Chamber ability. On an unmodified save of 1, remove 1 Memorian after the Attack ability resolves.',
+            effect: 'This unit\'s Memorians are tokens. There are 2 Memorians for every 3 models in this unit. While any of this unit\'s Memorians are on the battlefield, add 1 to this unit\'s resistance rolls when using the \'Ruination Chamber\' ability. Each time you make an unmodified save roll of 1 for this unit, remove 1 of its Memorians from the battlefield after the Attack ability has been resolved (the damage point is still inflicted).',
           },
-          phaseActivation: BattlePhase.ATTACK,
-          phaseActivationTiming: 'opponent',
+          phaseActivation: BattlePhase.START,
+          phaseActivationTiming: 'any',
           numberOfTimes: 'unlimited',
         },
       ],
@@ -1397,33 +1400,71 @@ const SERAPHON_ARMY: Army = {
 const STORMCAST_OPTIONS: ArmyOptions = {
   battleTraits: [
     {
-      name: 'Heavenly Mortal',
-      description: 'Stormcast heroes can channel divine power in critical moments.',
-      actions: [{
-        name: 'Heavenly Mortal',
-        description: 'Battle Trait: Stormcast Eternals',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Stormcast Eternals Hero.', effect: 'That unit can re-roll one failed hit roll this phase.' },
-        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }],
-    },
-    {
-      name: 'Scions of the Storm',
-      description: 'Stormcast reserves can arrive via lightning strike.',
-      actions: [{
-        name: 'Scions of the Storm',
-        description: 'Battle Trait: Stormcast Eternals',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Stormcast Eternals unit in reserve.', effect: 'Set up that unit on the battlefield more than 9" from all enemy units.' },
-        phaseActivation: BattlePhase.MOVEMENT, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }],
+      name: 'The Celestial Realm',
+      description: '',
+      actions: [
+        {
+          name: 'The Celestial Realm',
+          description: 'Set a unit in the Celestial Realm',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'If there are more friendly Stormcast Eternals units on the battlefield than there are set up in reserve, pick a friendly Stormcast Eternals unit that has not been deployed.',
+            effect: 'Set up that unit in reserve in the Celestial Realm. It has now been deployed.'
+          },
+          phaseActivation: BattlePhase.DEPLOYMENT,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true
+        },
+        {
+          name: 'Scions of the Storm',
+          description: 'Deploy a unit from the Celestial Realm',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Stormcast Eternals unit that is in the Celestial Realm.',
+            effect: 'Set up that unit anywhere on the battlefield more than 9" from all enemy units.'
+          },
+          phaseActivation: BattlePhase.MOVEMENT,
+          phaseActivationTiming: 'own',
+          numberOfTimes: 'unlimited',
+        },
+        {
+          name: 'Heavens-sent',
+          description: 'Resummon unit that has been destroyed',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly non-Unique Stormcast Eternals Infantry or Cavalry unit that started the battle with 2 or more models and that has been destroyed to be the target.',
+            effect: 'Set up a replacement unit with half the numbers of models from the target unit (rounding up) more than 9" from all enemy units.'
+
+          },
+          phaseActivation: BattlePhase.MOVEMENT,
+          phaseActivationTiming: 'own',
+          numberOfTimes: 'once',
+          commandPointCost: 1
+        },
+        {
+          name: 'Their finest hour',
+          description: 'Buff a unit',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Once per turn (Army), pick a friendly Stormcast Eternals unit that has not used this ability this battle to use this ability.',
+            effect: 'For the rest of the turn, add 1 to wound rolls for that unit\'s combat attacks and add 1 to save rolls for that unit.'
+          },
+          phaseActivation: BattlePhase.HERO,
+          phaseActivationTiming: 'own',
+          numberOfTimes: 'unlimited',
+          armyWide: true
+        },
+      ],
     },
   ],
   battleFormations: [
     {
-      name: 'Warrior Chamber',
+      name: 'Sentinels of the Bleak Citadels',
       description: 'A balanced Stormcast formation with sturdy Liberators at its core.',
       actions: [{
-        name: 'Shieldwall',
-        description: 'Battle Formation: Warrior Chamber',
+        name: 'Ancient Aura',
+        description: '',
         actionDetails: { actionType: 'passive', effect: 'Friendly Liberators units have Ward (6+) while they are contesting an objective.' },
         phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
       }],

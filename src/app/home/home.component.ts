@@ -330,21 +330,21 @@ const STORMCAST_ARMY: Army = {
         {
           name: 'Questor Relic Blade',
           type: 'melee',
-          attacks: '4',
+          attacks: '5',
           hit: '3+',
           wound: '3+',
-          rend: '-2',
+          rend: '1',
           damage: '2',
         },
       ],
       actions: [
         {
           name: 'Heroic Retribution',
-          description: 'The Knight-Questor calls upon Questor Soulsworn brethren to make the God-King\'s justice a reality.',
+          description: 'Should the need arise, the Knight-Questor will call upon their Soulsworn brethren to make the God-King\'s justice a reaility.',
           actionDetails: {
             actionType: 'activated',
-            declare: 'Reaction: You declared a Fight ability for this unit. Pick a friendly Questor Soulsworn unit within combat range that has not used a Fight ability this turn.',
-            effect: 'That unit can use a Fight ability immediately after this unit\'s Fight ability resolves.',
+            declare: 'Reaction: You declared a Fight ability for this unit. Pick a friendly Questor Soulsworn unit that has not used a Fight ability this turn and is within this unit\'s combat range to be the target.',
+            effect: 'The target can be picked to use a Fight ability immediately after the Fight ability used by this unit has been resolved.',
           },
           phaseActivation: BattlePhase.ATTACK,
           phaseActivationTiming: 'own',

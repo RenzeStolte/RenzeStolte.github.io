@@ -1,9 +1,18 @@
-import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { FactionSelectComponent } from './faction-select/faction-select.component';
-import { ActionCardComponent } from './shared/action-card/action-card.component';
-import { UnitDetailsComponent } from './unit-details/unit-details.component';
-import { ArmySetupComponent } from './army-setup/army-setup.component';
-import { Army, ArmyOptions, ArmySelections, BattleAction, BattlePhase, PhaseStep, TURN_PHASES, Unit } from './models/battle.models';
+import {AfterViewInit, Component, ElementRef, HostListener, ViewChild} from '@angular/core';
+import {FactionSelectComponent} from './faction-select/faction-select.component';
+import {ActionCardComponent} from './shared/action-card/action-card.component';
+import {UnitDetailsComponent} from './unit-details/unit-details.component';
+import {ArmySetupComponent} from './army-setup/army-setup.component';
+import {
+  Army,
+  ArmyOptions,
+  ArmySelections,
+  BattleAction,
+  BattlePhase,
+  PhaseStep,
+  TURN_PHASES,
+  Unit
+} from './models/battle.models';
 
 const CORE_ABILITIES: BattleAction[] = [
   {
@@ -210,8 +219,8 @@ function cloneAction(action: BattleAction): BattleAction {
   return {
     ...action,
     actionDetails: action.actionDetails.actionType === 'activated'
-      ? { ...action.actionDetails }
-      : { ...action.actionDetails },
+      ? {...action.actionDetails}
+      : {...action.actionDetails},
   };
 }
 
@@ -325,7 +334,7 @@ const STORMCAST_ARMY: Army = {
     {
       name: 'Knight-Questor',
       keywords: ['Hero', 'Infantry', 'Order', 'Stormcast Eternals', 'Warrior Chamber'],
-      characteristics: { move: '5"', save: '3+', health: '6', control: '2' },
+      characteristics: {move: '5"', save: '3+', health: '6', control: '2'},
       weapons: [
         {
           name: 'Questor Relic Blade',
@@ -378,7 +387,7 @@ const STORMCAST_ARMY: Army = {
     {
       name: 'Lord-Veritant',
       keywords: ['Hero', 'Priest (1)', 'Infantry', 'Order', 'Stormcast Eternals', 'Ruination Chamber'],
-      characteristics: { move: '5"', save: '3+', health: '6', control: '2' },
+      characteristics: {move: '5"', save: '3+', health: '6', control: '2'},
       weapons: [
         {
           name: 'Staff of Abjuration',
@@ -397,7 +406,7 @@ const STORMCAST_ARMY: Army = {
           wound: '3+',
           rend: '1',
           damage: 'D3',
-          abilities: [ 'Anti-Priest (+1 Rend)', 'Anti-Wizard (+1 Rend)']
+          abilities: ['Anti-Priest (+1 Rend)', 'Anti-Wizard (+1 Rend)']
         },
       ],
       actions: [
@@ -440,7 +449,7 @@ const STORMCAST_ARMY: Army = {
     {
       name: 'Lord-Terminos',
       keywords: ['Hero', 'Infantry', 'Order', 'Stormcast Eternals', 'Ruination Chamber'],
-      characteristics: { move: '5"', save: '3+', health: '6', control: '2' },
+      characteristics: {move: '5"', save: '3+', health: '6', control: '2'},
       weapons: [
         {
           name: 'Terminos Greatblade',
@@ -450,7 +459,7 @@ const STORMCAST_ARMY: Army = {
           wound: '2+',
           rend: '2',
           damage: '3',
-          abilities: [ 'Crit (Mortal)' ]
+          abilities: ['Crit (Mortal)']
         },
       ],
       actions: [
@@ -494,7 +503,7 @@ const STORMCAST_ARMY: Army = {
     {
       name: 'Lord-Vigilant on Gryph-Stalker',
       keywords: ['Hero', 'Cavalry', 'Order', 'Stormcast Eternals', 'Ruination Chamber'],
-      characteristics: { move: '12"', save: '3+', health: '8', control: '2' },
+      characteristics: {move: '12"', save: '3+', health: '8', control: '2'},
       weapons: [
         {
           name: 'Vigilant Blade',
@@ -546,7 +555,7 @@ const STORMCAST_ARMY: Army = {
     {
       name: 'Liberators',
       keywords: ['Infantry', 'Champion', 'Order', 'Stormcast Eternals', 'Warrior Chamber'],
-      characteristics: { move: '5"', save: '3+', health: '2', control: '1' },
+      characteristics: {move: '5"', save: '3+', health: '2', control: '1'},
       weapons: [
         {
           name: 'Warhammer',
@@ -586,7 +595,7 @@ const STORMCAST_ARMY: Army = {
     {
       name: 'Prosecutors',
       keywords: ['Infantry', 'Champion', 'Fly', 'Order', 'Stormcast Eternals', 'Ruination Chamber'],
-      characteristics: { move: '12"', save: '3+', health: '2', control: '1' },
+      characteristics: {move: '12"', save: '3+', health: '2', control: '1'},
       hasRangedWeapons: true,
       weapons: [
         {
@@ -607,7 +616,7 @@ const STORMCAST_ARMY: Army = {
           wound: '3+',
           rend: '1',
           damage: '1',
-          abilities: [ 'Charge (1+ Damage)']
+          abilities: ['Charge (1+ Damage)']
         },
       ],
       actions: [
@@ -650,7 +659,7 @@ const STORMCAST_ARMY: Army = {
     {
       name: 'Reclusians',
       keywords: ['Infantry', 'Champion', 'Order', 'Stormcast Eternals', 'Ruination Chamber'],
-      characteristics: { move: '5"', save: '3+', health: '3', control: '1' },
+      characteristics: {move: '5"', save: '3+', health: '3', control: '1'},
       weapons: [
         {
           name: 'Rune-blessed Weapons',
@@ -699,7 +708,7 @@ const SKAVEN_ARMY: Army = {
     {
       name: 'Grey Seer',
       keywords: ['Hero', 'Wizard (1)', 'Infantry', 'Chaos', 'Skaven', 'Masterclan'],
-      characteristics: { move: '6"', save: '6+', health: '5', control: '2' },
+      characteristics: {move: '6"', save: '6+', health: '5', control: '2'},
       weapons: [
         {
           name: 'Warstone Staff',
@@ -729,7 +738,7 @@ const SKAVEN_ARMY: Army = {
     {
       name: 'Warlock Engineer',
       keywords: ['Hero', 'Infantry', 'Chaos', 'Skaven', 'Scryre'],
-      characteristics: { move: '6"', save: '5+', health: '5', control: '2' },
+      characteristics: {move: '6"', save: '5+', health: '5', control: '2'},
       hasRangedWeapons: true,
       weapons: [
         {
@@ -783,7 +792,7 @@ const SKAVEN_ARMY: Army = {
     {
       name: 'Warplock Jezzails',
       keywords: ['Infantry', 'Chaos', 'Skaven', 'Scryre'],
-      characteristics: { move: '6"', save: '4+', health: '2', control: '1' },
+      characteristics: {move: '6"', save: '4+', health: '2', control: '1'},
       hasRangedWeapons: true,
       weapons: [
         {
@@ -824,7 +833,7 @@ const SKAVEN_ARMY: Army = {
     {
       name: 'Clanrats',
       keywords: ['Battleline', 'Infantry', 'Champion', 'Musician', 'Standard Bearer', 'Chaos', 'Skaven', 'Verminus'],
-      characteristics: { move: '6"', save: '5+', health: '1', control: '1' },
+      characteristics: {move: '6"', save: '5+', health: '1', control: '1'},
       weapons: [
         {
           name: 'Rusty Weapons',
@@ -855,7 +864,7 @@ const SKAVEN_ARMY: Army = {
     {
       name: 'Rat Ogors',
       keywords: ['Infantry', 'Mould', 'Chaos', 'Skaven'],
-      characteristics: { move: '6"', save: '5+', health: '4', control: '1' },
+      characteristics: {move: '6"', save: '5+', health: '4', control: '1'},
       hasRangedWeapons: true,
       weapons: [
         {
@@ -897,7 +906,7 @@ const SKAVEN_ARMY: Army = {
     {
       name: 'Ratling Warblaster',
       keywords: ['War Machine', 'Chaos', 'Skaven', 'Skryre'],
-      characteristics: { move: '6"', save: '4+', health: '7', control: '2' },
+      characteristics: {move: '6"', save: '4+', health: '7', control: '2'},
       hasRangedWeapons: true,
       weapons: [
         {
@@ -951,152 +960,267 @@ const SKAVEN_ARMY: Army = {
 };
 
 const DAUGHTERS_ARMY: Army = {
-  name: 'Hagg Nar',
+  name: '',
   faction: 'Daughters of Khaine',
   units: [
     {
-      name: 'Hag Queen',
-      keywords: ['Hero', 'Daughters of Khaine', 'Priest'],
-      characteristics: { move: '6"', save: '6+', health: '5', control: '2' },
+      name: 'Hag Queen on Cauldron of Blood',
+      keywords: ['Hero', 'Priest (1)', 'War Machine', 'Ward (6+)', 'Order', 'Daughters of Khaine', 'Aelf', 'Cauldron of Blood'],
+      characteristics: {move: '6"', save: '4+', health: '12', control: '5'},
+      hasRangedWeapons: true,
       weapons: [
         {
-          name: 'Sacrificial Knife',
+          name: 'Torrent of Burning Blood',
+          type: 'ranged',
+          attacks: '6',
+          hit: '3+',
+          wound: '3+',
+          rend: '1',
+          damage: '1',
+          range: '10"',
+          abilities: ['Shoot in combat']
+        },
+        {
+          name: 'Blade of Khaine',
           type: 'melee',
           attacks: '4',
           hit: '3+',
           wound: '4+',
-          rend: '-1',
+          rend: '1',
+          damage: '2',
+          abilities: ['Crit (Mortal)']
+        },
+        {
+          name: 'Avatar\'s Sword',
+          type: 'melee',
+          attacks: '5',
+          hit: '3+',
+          wound: '3+',
+          rend: '2',
+          damage: '3',
+        },
+        {
+          name: 'Witch Aelves\' Sciansa',
+          type: 'melee',
+          attacks: '6',
+          hit: '3+',
+          wound: '4+',
+          rend: '-',
           damage: '1',
         },
       ],
       actions: [
         {
-          name: 'Witchbrew',
-          description: 'Pour enchanted witchbrew to drive allies into a killing frenzy.',
-          actionDetails: {
-            actionType: 'activated',
-            declare: 'Pick a friendly Daughters of Khaine unit within 12".',
-            effect: 'Until the end of this turn, that unit cannot fail battleshock tests and adds 1 to wound rolls for melee attacks.',
-          },
-          phaseActivation: BattlePhase.HERO,
-          phaseActivationTiming: 'own',
-          numberOfTimes: 'perRound',
-        },
-        {
-          name: 'Touch of Death',
-          description: 'Channel Khaine\'s killing power into a single strike.',
-          actionDetails: {
-            actionType: 'activated',
-            declare: 'Pick an enemy unit within 3".',
-            effect: 'Roll a dice. On a 5+, deal D3 mortal wounds.',
-          },
-          phaseActivation: BattlePhase.HERO,
-          phaseActivationTiming: 'own',
-          numberOfTimes: 'perRound',
-        },
-        {
-          name: 'Priestess of Khaine',
-          description: 'The Hag Queen channels the fury of the Murder God.',
+          name: 'Altar of Khaine',
+          description: '',
           actionDetails: {
             actionType: 'passive',
-            effect: 'Friendly Daughters of Khaine units within 12" of this model are affected by the Blood Rites ability at one tier higher than the current battle round.',
+            effect: 'Add 1 to save rolls for friendly DoK Priests while they are wholly within 9" of this unit.',
           },
-          phaseActivation: BattlePhase.START,
+          phaseActivation: BattlePhase.ATTACK,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+        },
+        {
+          name: 'Bladed Impact',
+          description: '',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'If this unit charged this phase, pick an enemy unit within 1" of it to be the target.',
+            effect: 'Roll a D3. On a 2+, inflict an amount of mortal damage on the target equal to the roll.',
+          },
+          phaseActivation: BattlePhase.ATTACK,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'perRound',
+        },
+        {
+          name: 'Witchbrew',
+          description: '',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly DoK unit wholly within 12" of this unit to be the target.',
+            effect: 'Roll a dice. On a 3+, the target has Ward (5+) for the rest of the turn',
+          },
+          phaseActivation: BattlePhase.HERO,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'perRound',
+        },
+      ],
+    },
+    {
+      name: 'Witch Aelves with Bladed Bucklers',
+      keywords: ['Infantry', 'Champion', 'Musician', 'Standard Bearer', 'Ward (6+)', 'Order', 'Daughters of Khaine', 'Aelf'],
+      characteristics: {move: '6"', save: '5+', health: '1', control: '1'},
+      weapons: [
+        {
+          name: 'Sciansa',
+          type: 'melee',
+          attacks: '2',
+          hit: '3+',
+          wound: '4+',
+          rend: '-',
+          damage: '1',
+          abilities: ['Crit (Auto-wound)']
+        },
+      ],
+      actions: [
+        {
+          name: 'Bladed Bucklers',
+          description: '',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'Each time you make an unmodified save roll of 6 for a combat attack that targets this unit, inflict 1 mortal damage on the attacking unit after the Fight ability has been resolved.',
+          },
+          phaseActivation: BattlePhase.ATTACK,
           phaseActivationTiming: 'any',
           numberOfTimes: 'unlimited',
         },
       ],
     },
     {
-      name: 'Witch Aelves',
-      keywords: ['Battleline', 'Daughters of Khaine'],
-      characteristics: { move: '8"', save: '6+', health: '1', control: '1' },
+      name: 'Krethusa the Croneseer',
+      keywords: ['Unique', 'Hero', 'Priest (1)', 'Infantry', 'Fly', 'Ward (6+)', 'Order', 'Daughters of Khaine', 'Aelf'],
+      characteristics: {move: '12"', save: '5+', health: '6', control: '2'},
       weapons: [
         {
-          name: 'Paired Sacrificial Knives',
+          name: 'Staff of Morai-Heg',
           type: 'melee',
-          attacks: '3',
+          attacks: '4',
           hit: '3+',
           wound: '4+',
-          rend: '-',
-          damage: '1',
+          rend: '1',
+          damage: 'D3',
         },
       ],
       actions: [
         {
-          name: 'Fanatical Faith',
-          description: 'Zealous devotion shields the Witch Aelves from harm.',
-          actionDetails: {
-            actionType: 'passive',
-            effect: 'This unit has a 6+ ward.',
-          },
-          phaseActivation: BattlePhase.ATTACK,
-          phaseActivationTiming: 'opponent',
-          numberOfTimes: 'unlimited',
-        },
-        {
-          name: 'Knife Dance',
-          description: 'Dart and weave around the enemy after striking.',
+          name: 'Burnt Offerings',
+          description: '',
           actionDetails: {
             actionType: 'activated',
-            declare: 'Declare after this unit has fought.',
-            effect: 'This unit can make a 3" retreat move after fighting.',
+            declare: 'If this unit is within combat range of a friendly Cauldron of Blood, pick a visible friendly DoK Aelf non-Hero Infantry unit wholly within 18" of this unit to be the target.',
+            effect: 'Roll a dice. On a 2+, pick 1 of the following effects to apply to the target. (Until the start of your next turn, enemy units cannot use commands while they are in combat with the target) (The target can use the Normal Move ability as if it were your movement phase. That unit caounts as having used a Run ability this turn.) (For the rest of the turn, while the target is contesting an objective, subtract 10 from the control scores of enemy units contesting that objective that do not have the Hero or Monster keyword)',
+          },
+          phaseActivation: BattlePhase.HERO,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'perRound',
+        },
+        {
+          name: 'Murder of Crows',
+          description: '',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a visible enemy unit within 18" of this unit to be the target, then make a chanting roll of D6.',
+            effect: 'Roll a D3. If the chanting roll was 8+, roll a D6 instead. Inflict an amount of mortal damage on the target equal to the roll. In addition, if the roll exceeds the target\'s Health characteristic, subtract 1 from hit rolls for the target\'s attacks until the start of your next turn.',
+          },
+          phaseActivation: BattlePhase.HERO,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'perRound',
+          chantingValue: 4
+        },
+      ],
+    },
+    {
+      name: 'Slaughter Queen',
+      keywords: ['Hero', 'Priest (1)', 'Infantry', 'Ward (6+)', 'Order', 'Daughters of Khaine', 'Aelf'],
+      characteristics: {move: '6"', save: '5+', health: '5', control: '2'},
+      weapons: [
+        {
+          name: 'Deathsword and Blade of Khaine',
+          type: 'melee',
+          attacks: '6',
+          hit: '3+',
+          wound: '4+',
+          rend: '1',
+          damage: '2',
+        },
+      ],
+      actions: [
+        {
+          name: 'Orgy of Slaughter',
+          description: '',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly DoK Aelf Infantry unit wholly within 12" of this unit to be the target',
+            effect: 'Roll a dice. On a 3+, add 1 to the Attacks characteristic of the target\'s melee weapons for the rest of the turn.',
           },
           phaseActivation: BattlePhase.ATTACK,
-          phaseActivationTiming: 'own',
+          phaseActivationTiming: 'any',
           numberOfTimes: 'perRound',
         },
       ],
     },
     {
-      name: 'Blood Sisters',
-      keywords: ['Elite', 'Daughters of Khaine', 'Melusai'],
-      characteristics: { move: '8"', save: '5+', health: '2', control: '1' },
+      name: 'Doomfire Warlocks',
+      keywords: ['Wizard (1)', 'Cavalry', 'Champion', 'Ward (6+)', 'Order', 'Daughters of Khaine', 'Aelf'],
+      characteristics: {move: '14"', save: '5+', health: '3', control: '1'},
+      hasRangedWeapons: true,
       weapons: [
         {
-          name: 'Barbed Glaive',
-          type: 'melee',
-          attacks: '3',
+          name: 'Doomfire Crossbow',
+          type: 'ranged',
+          attacks: '2',
           hit: '3+',
-          wound: '3+',
-          rend: '-1',
+          wound: '4+',
+          rend: '-',
           damage: '1',
+          range: '10"'
+        },
+        {
+          name: 'Cursed Scimitar',
+          type: 'melee',
+          attacks: '2',
+          hit: '3+',
+          wound: '4+',
+          rend: '1',
+          damage: '1',
+        },
+        {
+          name: 'Dark Steed\'s Vicious Bite',
+          type: 'melee',
+          attacks: '2',
+          hit: '5+',
+          wound: '3+',
+          rend: '-',
+          damage: '1',
+          abilities: ['Companion']
         },
       ],
       actions: [
         {
-          name: 'Turned to Crystal',
-          description: 'Those slain by Melusai become crystalline statues.',
+          name: 'Outmanoeuvre',
+          description: '',
           actionDetails: {
             actionType: 'passive',
-            effect: 'Each time a model in an enemy unit is slain by an attack from this unit, subtract 1 from the Bravery of that enemy unit for the rest of the battle.',
+            effect: 'When this unit uses the \'Redeploy\' command, if you roll a 1-3 when determining the distance this unt can move, you can use a value of 4 instead.',
           },
-          phaseActivation: BattlePhase.ATTACK,
-          phaseActivationTiming: 'own',
+          phaseActivation: BattlePhase.MOVEMENT,
+          phaseActivationTiming: 'opponent',
           numberOfTimes: 'unlimited',
         },
       ],
     },
     {
-      name: 'Khinerai Heartrenders',
-      keywords: ['Daughters of Khaine', 'Khinerai', 'Fly'],
-      characteristics: { move: '14"', save: '6+', health: '1', control: '1' },
+      name: 'Khainite Shadowstalkers',
+      keywords: ['Infantry', 'Champion', 'Ward (6+)', 'Order', 'Daughters of Khaine', 'Aelf'],
+      characteristics: {move: '6"', save: '5+', health: '1', control: '1'},
       hasRangedWeapons: true,
       weapons: [
         {
-          name: 'Heartpiercer Bow',
+          name: 'Cursed Missiles',
           type: 'ranged',
-          attacks: '2',
+          attacks: '1',
           hit: '3+',
           wound: '3+',
-          rend: '-1',
+          rend: '1',
           damage: '1',
+          range: '10"'
         },
         {
-          name: 'Heartrender Blades',
+          name: 'Shadowstalker Blades',
           type: 'melee',
           attacks: '2',
-          hit: '4+',
+          hit: '3+',
           wound: '4+',
           rend: '-',
           damage: '1',
@@ -1104,26 +1228,14 @@ const DAUGHTERS_ARMY: Army = {
       ],
       actions: [
         {
-          name: 'Descend to Battle',
-          description: 'Dive from the skies to strike from an unexpected angle.',
+          name: 'Shadow Leap',
+          description: '',
           actionDetails: {
             actionType: 'activated',
-            declare: 'Set up this unit anywhere on the battlefield more than 9" from all enemy units.',
-            effect: 'This unit is set up from reserve. It can shoot this turn.',
+            declare: '',
+            effect: 'Remove this unit from the battlefield and set it up again on the battlefield more than 9" from all enemy units.',
           },
           phaseActivation: BattlePhase.MOVEMENT,
-          phaseActivationTiming: 'own',
-          numberOfTimes: 'once',
-        },
-        {
-          name: 'Fire and Flight',
-          description: 'Retreat into the skies after shooting.',
-          actionDetails: {
-            actionType: 'activated',
-            declare: 'Declare after this unit shoots.',
-            effect: 'This unit can make a 6" normal move. It cannot charge this turn.',
-          },
-          phaseActivation: BattlePhase.SHOOTING,
           phaseActivationTiming: 'own',
           numberOfTimes: 'perRound',
         },
@@ -1138,256 +1250,306 @@ const SERAPHON_ARMY: Army = {
   units: [
     {
       name: 'Slann Starmaster',
-      keywords: ['Hero', 'Seraphon', 'Wizard', 'Monster'],
-      characteristics: { move: '5"', save: '4+', health: '7', control: '2' },
+      keywords: ['Warmaster', 'Hero', 'Wizard (3)', 'Infantry', 'Fly', 'Ward (6+)'],
+      characteristics: {move: '5"', save: '5+', health: '9', control: '2'},
       weapons: [
         {
-          name: 'Azure Bolts',
-          type: 'ranged',
-          attacks: '1',
-          hit: '4+',
+          name: 'Azure Lightning',
+          type: 'melee',
+          attacks: '6',
+          hit: '3+',
           wound: '3+',
-          rend: '-1',
-          damage: 'D3',
+          rend: '1',
+          damage: '1',
+          abilities: ['Crit (Mortal)']
         },
       ],
       actions: [
         {
-          name: 'Celestial Deliverance',
-          description: 'Call down a rain of starlight upon your foes.',
+          name: 'Masters of Order',
+          description: 'Add 1 to casting rolls and can use unbind with extra range',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'Add 1 to casting rolls for this unit. In addition, this unit can use an Unbind ability if an enemy Wizard anywhere on the battlefield uses a Spell ability instead of an enemy Wizard within 30" of this unit, and when using the \'Banish Manifestation\' ability, this unit can pick a manifestation anywhere on the battlefield instead of within 30" of it.',
+          },
+          phaseActivation: BattlePhase.HERO,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+        },
+        {
+          name: 'Celestial Equilibrium',
+          description: 'Buff casting rolls of other nearby units.',
           actionDetails: {
             actionType: 'activated',
-            declare: 'Pick up to 3 different enemy units within 18".',
-            effect: 'Roll a dice for each target. On a 2+, deal D3 mortal wounds.',
+            declare: 'Make a casting roll of 2D6',
+            effect: 'For the rest of the turn, add 1 to casting rolls made for other friendly Seraphon Wizards while they are wholly within 12" of this unit.',
           },
-          castingValue: 7,
+          castingValue: 6,
           phaseActivation: BattlePhase.HERO,
           phaseActivationTiming: 'own',
           numberOfTimes: 'perRound',
         },
         {
-          name: 'Contemplations of the Ancient Ones',
-          description: 'The Starmaster reshapes reality according to the Great Plan.',
+          name: 'Arcane Vassal',
+          description: 'Cast from a Skink Wizard\'s position.',
           actionDetails: {
             actionType: 'activated',
-            declare: 'Use this ability at the start of the battle round.',
-            effect: 'Pick 1 friendly Seraphon unit on the battlefield. That unit can re-roll save rolls until the end of the round.',
+            declare: 'Pick a friendly Skink Wizard wholly within 18" of this unit to be the target.',
+            effect: 'Measure the range and visibility of the next Spell ability used by this unit this phase from the target instead of from this unit. The target is treated as the caster for the purpose of other abilities or spell effects, such as \'Unbind\' or \'The Earth Trembles\'.',
           },
-          phaseActivation: BattlePhase.START,
+          phaseActivation: BattlePhase.HERO,
           phaseActivationTiming: 'any',
           numberOfTimes: 'perRound',
         },
         {
-          name: 'Dispel',
-          description: 'Unravel the enemy\'s sorcery with ancient power.',
+          name: 'Celestial Reinforcements',
+          description: 'Revive a dead unit with 3 models or more',
           actionDetails: {
             actionType: 'activated',
-            declare: 'Use when an enemy Wizard casts a spell within 30".',
-            effect: 'Roll 2D6. If the total exceeds the casting roll, the spell is unbound.',
+            declare: 'Pick a friendly Seraphon unit that started the battle with 3 ore more models and that has been destroyed to be the target.',
+            effect: 'Roll a dice. On a 4+, set up a replacement unit with half the number of models from the target unit (rounding up) wholly within 12" of this unit and more than 9" from all enemy units.',
           },
           phaseActivation: BattlePhase.HERO,
-          phaseActivationTiming: 'opponent',
+          phaseActivationTiming: 'any',
           numberOfTimes: 'perRound',
         },
       ],
     },
     // Lord Kroak warscroll
+    // {
+    //   name: 'Lord Kroak',
+    //   keywords: [
+    //     'Warmaster', 'Unique', 'Hero', 'Wizard (3)', 'Fly', 'Ward (4+)',
+    //     'Order', 'Seraphon', 'Slann'
+    //   ],
+    //   characteristics: { move: '5"', save: '4+', health: '18', control: '5' },
+    //   weapons: [
+    //     {
+    //       name: 'Gaze of Kroak',
+    //       type: 'ranged',
+    //       range: '12"',
+    //       attacks: '1',
+    //       hit: '2+',
+    //       wound: '3+',
+    //       rend: '2',
+    //       damage: 'D6',
+    //       abilities: ['Shoot in Combat'],
+    //     },
+    //     {
+    //       name: 'Azyrite Force Barrier',
+    //       type: 'melee',
+    //       attacks: '2D6',
+    //       hit: '3+',
+    //       wound: '3+',
+    //       rend: '1',
+    //       damage: '1',
+    //       abilities: ['Crit (Mortal)'],
+    //     },
+    //   ],
+    //   actions: [
+    //     {
+    //       name: 'Supreme Master of Order',
+    //       description: 'The slann are amongst the greatest wizards in existence, but Lord Kroak is mighty even in comparison to others of his kind.',
+    //       actionDetails: {
+    //         actionType: 'passive',
+    //         effect: 'Add 2 to casting rolls for this unit. In addition, this unit can use an Unbind ability if an enemy Wizard anywhere on the battlefield uses a Spell ability instead of an enemy Wizard within 30" of this unit, and when using the \'Banish Manifestation\' ability, this unit can pick a manifestation anywhere on the battlefield instead of within 30" of it.',
+    //       },
+    //       phaseActivation: BattlePhase.HERO,
+    //       phaseActivationTiming: 'own',
+    //       numberOfTimes: 'unlimited',
+    //     },
+    //     {
+    //       name: 'Arcane Vassal',
+    //       description: 'A Slann Starmaster can channel the power of a spell through one of their followers.',
+    //       actionDetails: {
+    //         actionType: 'activated',
+    //         declare: 'Once Per Turn, Any Hero Phase. Pick a friendly Skink Wizard wholly within 18" of this unit to be the target.',
+    //         effect: 'Measure the range and visibility of the next Spell ability used by this unit this phase from the target instead from this unit. The target is treated as the caster for the purpose of other abilities or spell effects, such as \'Unbind\' or \'The Earth Trembles\'',
+    //       },
+    //       phaseActivation: BattlePhase.HERO,
+    //       phaseActivationTiming: 'any',
+    //       numberOfTimes: 'perRound',
+    //     },
+    //     {
+    //       name: 'Dead for Innumerable Ages',
+    //       description: 'Lord Kroak is no longer truly alive; his form is preserved only by his indomitable spirit. As a result, he is immune to all but the most devastating attacks.',
+    //       actionDetails: {
+    //         actionType: 'activated',
+    //         declare: 'End of Any Turn.',
+    //         effect: 'This unit must use this ability each turn while it is damaged. Roll 3D6 and add the number of damage points this unit has to the roll. On a 20+ this unit is destroyed. Otherwise, Heal (18) this unit.',
+    //       },
+    //       phaseActivation: BattlePhase.END,
+    //       phaseActivationTiming: 'any',
+    //       numberOfTimes: 'perRound',
+    //     },
+    //     {
+    //       name: 'Celestial Deliverance',
+    //       description: 'Lord Kroak\'s palanquin quivers with barely contained force before unleashing ruination on the enemies of the Seraphon.',
+    //       actionDetails: {
+    //         actionType: 'activated',
+    //         declare: 'Your Hero Phase. This unit can cast this spell more than once per phase. Pick up to 3 different visible enemy units within 12" of this unit to be the targets, then make a casting roll of 2D6.',
+    //         effect: 'Roll a D3 for each target. On a 2+, inflict an amount of mortal damage on the target equal to the roll.'
+    //       },
+    //       castingValue: 7,
+    //       phaseActivation: BattlePhase.HERO,
+    //       phaseActivationTiming: 'own',
+    //       numberOfTimes: 'perRound',
+    //     },
+    //   ],
+    // },
     {
-      name: 'Lord Kroak',
-      keywords: [
-        'Warmaster', 'Unique', 'Hero', 'Wizard (3)', 'Fly', 'Ward (4+)',
-        'Order', 'Seraphon', 'Slann'
-      ],
-      characteristics: { move: '5"', save: '4+', health: '18', control: '5' },
+      name: 'Aggradon Lancers',
+      keywords: ['Cavalry', 'Champion', 'Musician', 'Standard Bearer'],
+      characteristics: {move: '10"', save: '4+', health: '5', control: '2'},
       weapons: [
         {
-          name: 'Gaze of Kroak',
-          type: 'ranged',
-          range: '12"',
-          attacks: '1',
-          hit: '2+',
-          wound: '3+',
-          rend: '2',
-          damage: 'D6',
-          abilities: ['Shoot in Combat'],
-        },
-        {
-          name: 'Azyrite Force Barrier',
+          name: 'Celestite Spear and Club',
           type: 'melee',
-          attacks: '2D6',
+          attacks: '3',
           hit: '3+',
           wound: '3+',
           rend: '1',
           damage: '1',
-          abilities: ['Crit (Mortal)'],
+          abilities: ['Charge (+1 Damage)', 'Anti-Monster (+1 Rend)']
+        },
+        {
+          name: 'Aggradon\'s Rending Bites and Striking Talons',
+          type: 'melee',
+          attacks: '3',
+          hit: '4+',
+          wound: '3+',
+          rend: '2',
+          damage: '2',
+          abilities: ['Companion']
         },
       ],
       actions: [
         {
-          name: 'Supreme Master of Order',
-          description: 'The slann are amongst the greatest wizards in existence, but Lord Kroak is mighty even in comparison to others of his kind.',
-          actionDetails: {
-            actionType: 'passive',
-            effect: 'Add 2 to casting rolls for this unit. In addition, this unit can use an Unbind ability if an enemy Wizard anywhere on the battlefield uses a Spell ability instead of an enemy Wizard within 30" of this unit, and when using the \'Banish Manifestation\' ability, this unit can pick a manifestation anywhere on the battlefield instead of within 30" of it.',
-          },
-          phaseActivation: BattlePhase.HERO,
-          phaseActivationTiming: 'own',
-          numberOfTimes: 'unlimited',
-        },
-        {
-          name: 'Arcane Vassal',
-          description: 'A Slann Starmaster can channel the power of a spell through one of their followers.',
+          name: 'Primal Rage',
+          description: 'If fighting, get stacks of rage which gives more damage.',
           actionDetails: {
             actionType: 'activated',
-            declare: 'Once Per Turn, Any Hero Phase. Pick a friendly Skink Wizard wholly within 18" of this unit to be the target.',
-            effect: 'Measure the range and visibility of the next Spell ability used by this unit this phase from the target instead from this unit. The target is treated as the caster for the purpose of other abilities or spell effects, such as \'Unbind\' or \'The Earth Trembles\'',
-          },
-          phaseActivation: BattlePhase.HERO,
-          phaseActivationTiming: 'any',
-          numberOfTimes: 'perRound',
-        },
-        {
-          name: 'Dead for Innumerable Ages',
-          description: 'Lord Kroak is no longer truly alive; his form is preserved only by his indomitable spirit. As a result, he is immune to all but the most devastating attacks.',
-          actionDetails: {
-            actionType: 'activated',
-            declare: 'End of Any Turn.',
-            effect: 'This unit must use this ability each turn while it is damaged. Roll 3D6 and add the number of damage points this unit has to the roll. On a 20+ this unit is destroyed. Otherwise, Heal (18) this unit.',
+            declare: 'This unit must use this ability each turn',
+            effect: 'If this unit used any Fight abilities this turn, place a rage token next to it, to a maximum of 3. If this unit did not use any Fight abilities this turn, remove all rage tokens it has. Add 1 to the attacks characteristics of this unit\'s Companion weapons for each rage token it has until the end of the next turn.',
           },
           phaseActivation: BattlePhase.END,
           phaseActivationTiming: 'any',
-          numberOfTimes: 'perRound',
-        },
-        {
-          name: 'Celestial Deliverance',
-          description: 'Lord Kroak\'s palanquin quivers with barely contained force before unleashing ruination on the enemies of the Seraphon.',
-          actionDetails: {
-            actionType: 'activated',
-            declare: 'Your Hero Phase. This unit can cast this spell more than once per phase. Pick up to 3 different visible enemy units within 12" of this unit to be the targets, then make a casting roll of 2D6.',
-            effect: 'Roll a D3 for each target. On a 2+, inflict an amount of mortal damage on the target equal to the roll.'
-          },
-          castingValue: 7,
-          phaseActivation: BattlePhase.HERO,
-          phaseActivationTiming: 'own',
-          numberOfTimes: 'perRound',
+          numberOfTimes: 'unlimited',
         },
       ],
     },
     {
       name: 'Saurus Warriors',
-      keywords: ['Battleline', 'Seraphon', 'Saurus'],
-      characteristics: { move: '5"', save: '4+', health: '2', control: '1' },
+      keywords: ['Infantry', 'Champion', 'Musician', 'Standard Bearer', 'Order', 'Seraphon', 'Saurus'],
+      characteristics: {move: '5"', save: '4+', health: '2', control: '1'},
       weapons: [
         {
-          name: 'Celestite Club',
+          name: 'Celestite Weapon',
           type: 'melee',
           attacks: '2',
-          hit: '4+',
+          hit: '3+',
           wound: '3+',
-          rend: '-1',
+          rend: '1',
           damage: '1',
         },
       ],
       actions: [
         {
-          name: 'Stardrake Shields',
-          description: 'Thick shields absorb and deflect enemy blows.',
+          name: 'Ordered Cohorts',
+          description: 'Better save when contesting an objective you control',
           actionDetails: {
             actionType: 'passive',
-            effect: 'Each time a save roll of an unmodified 6 is made for this unit, deal 1 mortal wound to the attacking unit.',
+            effect: 'Add 1 to save rolls for this unit while each model in this unit is contesting an objective you control',
           },
           phaseActivation: BattlePhase.ATTACK,
-          phaseActivationTiming: 'opponent',
-          numberOfTimes: 'unlimited',
-        },
-        {
-          name: 'Ordered Cohort',
-          description: 'In ranked formation, Saurus Warriors become immovable.',
-          actionDetails: {
-            actionType: 'passive',
-            effect: 'Add 1 to save rolls for this unit while it has 10 or more models and is within 6" of a friendly Seraphon Hero.',
-          },
-          phaseActivation: BattlePhase.ATTACK,
-          phaseActivationTiming: 'opponent',
+          phaseActivationTiming: 'any',
           numberOfTimes: 'unlimited',
         },
       ],
     },
     {
-      name: 'Skink Skirmishers',
-      keywords: ['Battleline', 'Seraphon', 'Skink'],
-      characteristics: { move: '8"', save: '6+', health: '1', control: '1' },
-      hasRangedWeapons: true,
+      name: 'Skink Starseer',
+      keywords: ['Hero', 'Wizard (2)', 'Infantry', 'Fly', 'Order', 'Seraphon', 'Skink'],
+      characteristics: {move: '5"', save: '4+', health: '6', control: '2'},
       weapons: [
         {
-          name: 'Boltspitter',
-          type: 'ranged',
-          attacks: '2',
-          hit: '5+',
-          wound: '4+',
-          rend: '-',
-          damage: '1',
-        },
-        {
-          name: 'Moonstone Club',
+          name: 'Astromancer\'s staff',
           type: 'melee',
-          attacks: '1',
-          hit: '5+',
-          wound: '5+',
-          rend: '-',
-          damage: '1',
+          attacks: '2',
+          hit: '4+',
+          wound: '3+',
+          rend: '1',
+          damage: 'D3',
         },
       ],
       actions: [
         {
-          name: 'Nimble',
-          description: 'Skinks dart away from danger with reptilian agility.',
+          name: 'Celestial Doom',
+          description: 'Disable ward on an enemy unit.',
           actionDetails: {
             actionType: 'activated',
-            declare: 'Declare a retreat for this unit.',
-            effect: 'This unit can retreat and still shoot later in the turn.',
+            declare: 'Pick a visible enemy unit within 18" to be the target, then make a casting roll of 2D6.',
+            effect: 'Ward rolls cannot be made for the target for the rest of the turn.',
           },
-          phaseActivation: BattlePhase.MOVEMENT,
+          phaseActivation: BattlePhase.HERO,
           phaseActivationTiming: 'own',
-          numberOfTimes: 'unlimited',
+          numberOfTimes: 'perRound',
+          castingValue: 7,
         },
       ],
     },
     {
-      name: 'Bastiladon',
-      keywords: ['Seraphon', 'Monster', 'Skink'],
-      characteristics: { move: '5"', save: '2+', health: '12', control: '5' },
-      hasRangedWeapons: true,
+      name: 'Kroxigor Warspawned',
+      keywords: ['Infantry', 'Order', 'Seraphon', 'Kroxigor'],
+      characteristics: {
+        move: '5"',
+        save: '4+',
+        health: '6',
+        control: '2'
+      },
       weapons: [
         {
-          name: 'Solar Engine',
-          type: 'ranged',
-          attacks: '3',
+          name: 'Drakefang Warpick',
+          type: 'melee',
+          attacks: '4',
           hit: '4+',
-          wound: '3+',
-          rend: '-1',
+          wound: '2+',
+          rend: '1',
           damage: '2',
+          abilities: ['Anti-Monster (+1 Rend)']
         },
         {
-          name: 'Bludgeoning Tail',
+          name: 'Starfang Warpick',
           type: 'melee',
-          attacks: '3',
+          attacks: '4',
           hit: '4+',
-          wound: '3+',
-          rend: '-1',
-          damage: '2',
+          wound: '2+',
+          rend: '1',
+          damage: '3',
+          abilities: ['Anti-Monster (+1 Rend)']
         },
       ],
       actions: [
         {
-          name: 'Armoursaurus',
-          description: 'The Bastiladon\'s shell is nearly impenetrable.',
+          name: 'Spawn of Sotek',
+          description: 'Gets Damage boost when fighting with skinks.',
           actionDetails: {
             actionType: 'passive',
-            effect: 'This model has a 3+ save that cannot be modified by Rend.',
+            effect: 'Add 1 to the Damage characteristic of this unit\'s melee weapons while this unit is wholly within 12" of any friendly Skink Infantry or Skink Cavalry units in combat.',
           },
           phaseActivation: BattlePhase.ATTACK,
-          phaseActivationTiming: 'opponent',
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+        },
+        {
+          name: 'Heavy-Scaled Skin',
+          description: 'Defense against ranged weapons.',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'Subtract 1 from the Rend characteristic of ranged weapons used for shooting attacks that target this unit.',
+          },
+          phaseActivation: BattlePhase.SHOOTING,
+          phaseActivationTiming: 'any',
           numberOfTimes: 'unlimited',
         },
       ],
@@ -1640,16 +1802,16 @@ const STORMCAST_OPTIONS: ArmyOptions = {
       description: 'Harness Sigmar\'s lightning to smite the enemy.',
       actions: [
         {
-        name: 'Lightning Blast',
-        description: 'Spell Lore: Lore of the Storm',
-        actionDetails: {
-          actionType: 'activated',
-          declare: 'Pick a friendly Wizard to cast this spell, then pick the closest visible enemy unit to them that has not been picked to be the target of this ability this turn to be the target. If 2 or more visible enemy units are tied to be the closest, you can pick which is the target. Then, make a casting roll of 2D6.',
-          effect: 'Inflict D3 mortal damage on the target.'
-        },
-        castingValue: 5,
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }
+          name: 'Lightning Blast',
+          description: 'Spell Lore: Lore of the Storm',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Wizard to cast this spell, then pick the closest visible enemy unit to them that has not been picked to be the target of this ability this turn to be the target. If 2 or more visible enemy units are tied to be the closest, you can pick which is the target. Then, make a casting roll of 2D6.',
+            effect: 'Inflict D3 mortal damage on the target.'
+          },
+          castingValue: 5,
+          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
+        }
       ],
     },
     {
@@ -1694,26 +1856,49 @@ const STORMCAST_OPTIONS: ArmyOptions = {
   ],
   prayerLore: [
     {
-      name: 'Prayers of Sigmar',
-      description: 'Invoke Sigmar\'s divine protection over the faithful.',
-      actions: [{
-        name: 'Sigmar\'s Shield',
-        description: 'Prayer Lore: Prayers of Sigmar',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Priest to chant this prayer, pick a friendly unit wholly within 12" as the target.', effect: 'If answered, the target has Ward (5+) until your next hero phase.' },
-        chantingValue: 4,
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }],
-    },
-    {
-      name: 'Prayers of Retribution',
-      description: 'Call down divine punishment on the enemies of Order.',
-      actions: [{
-        name: 'Smite',
-        description: 'Prayer Lore: Prayers of Retribution',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Priest to chant this prayer, pick a visible enemy unit within 12" as the target.', effect: 'If answered, inflict D3 mortal damage on the target.' },
-        chantingValue: 5,
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }],
+      name: 'Prayers of the Stormhost',
+      description: '',
+      actions: [
+        {
+          name: 'Healing Storm',
+          description: 'Prayer Lore: Heal one unit (+ heal everyone if crit)',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Priest to chant this prayer, pick a visible friendly Stormcast Eternal unit wholly within 12" of them to be the target, then make a chanting roll of D6',
+            effect: 'Heal (D3) the target. If the chanting roll was 8+, Heal (D3) each visible friendly Stormcast Eternal unit wholly within 12" of the chanter instead.'
+          },
+          chantingValue: 4,
+          phaseActivation: BattlePhase.HERO,
+          phaseActivationTiming: 'own',
+          numberOfTimes: 'perRound',
+        },
+        {
+          name: 'Bless Weapons',
+          description: 'Prayer Lore: Buff one units attack (+ everyone if crit)',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly priest to chant this prayer, pick a visible friendly Stormcast Eternal Infantry unit wholly within 12" of them to be the target, then make a chanting roll of D6.',
+            effect: 'Add 1 to the Attacks characteristic of the target\'s melee weapons until the start of your next turn. If the chanting roll was 12+, this ability affects all visible friendly Stormcast Eternals units wholly within 12" of the chanter.'
+          },
+          chantingValue: 6,
+          phaseActivation: BattlePhase.HERO,
+          phaseActivationTiming: 'own',
+          numberOfTimes: 'perRound',
+        },
+        {
+          name: 'Translocation',
+          description: 'Prayer Lore: Teleport one unit (+ buff defense if crit)',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly priest to chant this prayer, pick a visible friendly Stormcast Eternal unit wholly within 12" of them to be the target, then make a chanting roll of D6.',
+            effect: 'Remove the target from the battlefield and set it up again on the battlefield more than 9" from all enemy units. In addition, if the chanting roll was 8+, subtract 1 from hit rolls for attacks that target that unit for the rest of the battle round.'
+          },
+          chantingValue: 4,
+          phaseActivation: BattlePhase.HERO,
+          phaseActivationTiming: 'own',
+          numberOfTimes: 'perRound',
+        }
+      ],
     },
   ],
 };
@@ -1727,35 +1912,54 @@ const SKAVEN_OPTIONS: ArmyOptions = {
         {
           name: 'The Lurking Vermintide',
           description: 'Battle Trait — Deployment Phase',
-          actionDetails: { actionType: 'activated', declare: 'Pick a friendly Skaven unit that has not been deployed.', effect: 'Set up that unit in reserve in the tunnels below. It has now been deployed.' },
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Skaven unit that has not been deployed.',
+            effect: 'Set up that unit in reserve in the tunnels below. It has now been deployed.'
+          },
           phaseActivation: BattlePhase.DEPLOYMENT, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
           armyWide: true,
         },
         {
           name: 'Gnawhole Ambush',
           description: 'Battle Trait — Your Movement Phase',
-          actionDetails: { actionType: 'activated', declare: 'Pick a friendly Skaven unit that is in the tunnels below to use this ability.', effect: 'Set up that unit wholly within 6" of a friendly Gnawhole and more than 9" from all enemy units.' },
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Skaven unit that is in the tunnels below to use this ability.',
+            effect: 'Set up that unit wholly within 6" of a friendly Gnawhole and more than 9" from all enemy units.'
+          },
           phaseActivation: BattlePhase.MOVEMENT, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
           armyWide: true,
         },
         {
           name: 'Splinters of the Vermindoom',
           description: 'Battle Trait — Once Per Battle Round (Army), Start of Battle Round',
-          actionDetails: { actionType: 'activated', declare: 'You can use this ability if there are fewer than 3 friendly Gnawholes on the battlefield.', effect: 'Set up a Gnawhole on the battlefield more than 9" from all enemy units, more than 1" from all friendly units and more than 3" from all objectives and other terrain features.' },
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'You can use this ability if there are fewer than 3 friendly Gnawholes on the battlefield.',
+            effect: 'Set up a Gnawhole on the battlefield more than 9" from all enemy units, more than 1" from all friendly units and more than 3" from all objectives and other terrain features.'
+          },
           phaseActivation: BattlePhase.START, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
           armyWide: true,
         },
         {
           name: 'Always Three Clawsteps Ahead',
           description: 'Battle Trait — Once Per Turn (Army), Enemy Hero Phase',
-          actionDetails: { actionType: 'activated', declare: 'Pick a friendly non-Monster Skaven unit that is not in combat and was not set up this turn to use this ability.', effect: 'That unit can use the \'Normal Move\' ability as if it were your movement phase.' },
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly non-Monster Skaven unit that is not in combat and was not set up this turn to use this ability.',
+            effect: 'That unit can use the \'Normal Move\' ability as if it were your movement phase.'
+          },
           phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'opponent', numberOfTimes: 'perRound',
           armyWide: true,
         },
         {
           name: 'Too Quick to Hit-Hit',
           description: 'Battle Trait — Passive',
-          actionDetails: { actionType: 'passive', effect: 'No mortal damage is inflicted on friendly Skaven Infantry and Cavalry units by Retreat abilities.' },
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'No mortal damage is inflicted on friendly Skaven Infantry and Cavalry units by Retreat abilities.'
+          },
           phaseActivation: BattlePhase.MOVEMENT, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
           unitFilter: ['Infantry', 'Cavalry'],
         },
@@ -1769,7 +1973,11 @@ const SKAVEN_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Skryre Prototypes',
         description: 'Battle Formation: Warpcog Convocation — Once Per Turn (Army), Your Shooting Phase',
-        actionDetails: { actionType: 'activated', declare: 'Pick up to 3 friendly Skryre units to be the targets.', effect: 'Roll a dice for each target and apply the corresponding effect: 1 — Kaboom!: Inflict D3 mortal damage on the target. 2-5 — More Power!: Add 1 to wound rolls for the target\'s shooting attacks for the rest of the turn. 6 — More-more Power!: In addition to the effect of \'More Power!\', add 1 to the Rend characteristic of the target\'s ranged weapons for the rest of the turn.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick up to 3 friendly Skryre units to be the targets.',
+          effect: 'Roll a dice for each target and apply the corresponding effect: 1 — Kaboom!: Inflict D3 mortal damage on the target. 2-5 — More Power!: Add 1 to wound rolls for the target\'s shooting attacks for the rest of the turn. 6 — More-more Power!: In addition to the effect of \'More Power!\', add 1 to the Rend characteristic of the target\'s ranged weapons for the rest of the turn.'
+        },
         phaseActivation: BattlePhase.SHOOTING, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
         armyWide: true,
       }],
@@ -1780,7 +1988,11 @@ const SKAVEN_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Prized Creations',
         description: 'Battle Formation: Fleshmeld Menagerie — Once Per Turn (Army), Your Hero Phase',
-        actionDetails: { actionType: 'activated', declare: 'Pick up to 3 friendly non-Hero Moulder units to be the targets.', effect: 'Roll a dice for each target and apply the corresponding effect: 1-2 — Self-destructive Fury: Inflict D3 mortal damage on the target. 3-4 — Rabid Infusion: Add 1 to the Attacks characteristic of the target\'s melee weapons until the start of your next turn. 5-6 — Blinded by Frenzy: In addition to the effect of \'Rabid Infusion\', the target has Ward (5+) until the start of your next turn.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick up to 3 friendly non-Hero Moulder units to be the targets.',
+          effect: 'Roll a dice for each target and apply the corresponding effect: 1-2 — Self-destructive Fury: Inflict D3 mortal damage on the target. 3-4 — Rabid Infusion: Add 1 to the Attacks characteristic of the target\'s melee weapons until the start of your next turn. 5-6 — Blinded by Frenzy: In addition to the effect of \'Rabid Infusion\', the target has Ward (5+) until the start of your next turn.'
+        },
         phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
         armyWide: true,
       }],
@@ -1791,7 +2003,11 @@ const SKAVEN_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Corrupted Earth',
         description: 'Battle Formation: Virulent Procession — Once Per Turn (Army), End of Any Turn',
-        actionDetails: { actionType: 'activated', declare: 'Pick up to 3 friendly Pestilens units to be the targets.', effect: 'For each target: Make a pile-in move. Then, pick an enemy unit in combat with the target and roll a D3. On a 2+, inflict an amount of mortal damage on that enemy unit equal to the roll.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick up to 3 friendly Pestilens units to be the targets.',
+          effect: 'For each target: Make a pile-in move. Then, pick an enemy unit in combat with the target and roll a D3. On a 2+, inflict an amount of mortal damage on that enemy unit equal to the roll.'
+        },
         phaseActivation: BattlePhase.END, phaseActivationTiming: 'any', numberOfTimes: 'perRound',
         armyWide: true,
       }],
@@ -1802,7 +2018,11 @@ const SKAVEN_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Claw-Picked',
         description: 'Battle Formation: Claw-Horde — Once Per Turn (Army), Your Combat Phase',
-        actionDetails: { actionType: 'activated', declare: 'Pick up to 3 friendly Verminus units that charged this turn to be the targets.', effect: 'Add 1 to the Rend characteristic of the targets\' melee weapons for the rest of the turn.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick up to 3 friendly Verminus units that charged this turn to be the targets.',
+          effect: 'Add 1 to the Rend characteristic of the targets\' melee weapons for the rest of the turn.'
+        },
         phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
         armyWide: true,
       }],
@@ -1815,7 +2035,11 @@ const SKAVEN_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Cunning Deceiver',
         description: 'Heroic Trait',
-        actionDetails: { actionType: 'activated', declare: 'Pick this unit after it is targeted by an attack.', effect: 'Pick a friendly unit within 3" of this unit. That unit becomes the target instead.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick this unit after it is targeted by an attack.',
+          effect: 'Pick a friendly unit within 3" of this unit. That unit becomes the target instead.'
+        },
         phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'opponent', numberOfTimes: 'once',
       }],
     },
@@ -1825,7 +2049,10 @@ const SKAVEN_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Verminous Valour',
         description: 'Heroic Trait',
-        actionDetails: { actionType: 'passive', effect: 'Roll a dice each time this unit would be allocated a wound or mortal wound while within 3" of a friendly Skaven unit with 3+ models. On a 4+, that wound is allocated to that unit instead.' },
+        actionDetails: {
+          actionType: 'passive',
+          effect: 'Roll a dice each time this unit would be allocated a wound or mortal wound while within 3" of a friendly Skaven unit with 3+ models. On a 4+, that wound is allocated to that unit instead.'
+        },
         phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
       }],
     },
@@ -1837,7 +2064,7 @@ const SKAVEN_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Foulhide',
         description: 'Artifact of Power — End of Any Turn',
-        actionDetails: { actionType: 'passive', effect: 'Heal (D3) this unit.' },
+        actionDetails: {actionType: 'passive', effect: 'Heal (D3) this unit.'},
         phaseActivation: BattlePhase.END, phaseActivationTiming: 'any', numberOfTimes: 'perRound',
       }],
     },
@@ -1847,7 +2074,11 @@ const SKAVEN_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Warpstone Charm',
         description: 'Artifact of Power — Any Combat Phase',
-        actionDetails: { actionType: 'activated', declare: 'Pick an enemy unit in combat with this unit to be the target.', effect: 'Roll a dice. On a 3+, subtract 1 from save rolls for the target for the rest of the turn.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick an enemy unit in combat with this unit to be the target.',
+          effect: 'Roll a dice. On a 3+, subtract 1 from save rolls for the target for the rest of the turn.'
+        },
         phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'any', numberOfTimes: 'perRound',
       }],
     },
@@ -1857,7 +2088,11 @@ const SKAVEN_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Skavenbrew',
         description: 'Artifact of Power — Once Per Battle, Any Combat Phase',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly non-Hero Skaven Infantry unit wholly within 13" of this unit to be the target.', effect: 'Inflict D3 mortal damage on the target. Then, add 1 to the Attacks characteristic of the target\'s melee weapons for the rest of the turn.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick a friendly non-Hero Skaven Infantry unit wholly within 13" of this unit to be the target.',
+          effect: 'Inflict D3 mortal damage on the target. Then, add 1 to the Attacks characteristic of the target\'s melee weapons for the rest of the turn.'
+        },
         phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'any', numberOfTimes: 'once',
       }],
     },
@@ -1870,21 +2105,33 @@ const SKAVEN_OPTIONS: ArmyOptions = {
         {
           name: 'Wither',
           description: 'Spell — Your Hero Phase',
-          actionDetails: { actionType: 'activated', declare: 'Pick a friendly Skaven Wizard to cast this spell, pick a visible enemy unit within 13" to be the target, then make a casting roll of 2D6.', effect: 'Inflict D3 mortal damage on the target.' },
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Skaven Wizard to cast this spell, pick a visible enemy unit within 13" to be the target, then make a casting roll of 2D6.',
+            effect: 'Inflict D3 mortal damage on the target.'
+          },
           castingValue: 6,
           phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
         },
         {
           name: 'Skitterleap',
           description: 'Spell — Your Hero Phase',
-          actionDetails: { actionType: 'activated', declare: 'Pick a friendly Skaven Wizard to cast this spell, pick a visible friendly Skaven Hero wholly within 13" to be the target, then make a casting roll of 2D6.', effect: 'Remove the target from the battlefield and set it up again on the battlefield more than 9" from all enemy units.' },
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Skaven Wizard to cast this spell, pick a visible friendly Skaven Hero wholly within 13" to be the target, then make a casting roll of 2D6.',
+            effect: 'Remove the target from the battlefield and set it up again on the battlefield more than 9" from all enemy units.'
+          },
           castingValue: 6,
           phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
         },
         {
           name: 'Warpgale',
           description: 'Spell — Your Hero Phase',
-          actionDetails: { actionType: 'activated', declare: 'Pick a friendly Skaven Wizard to cast this spell, pick a visible enemy unit within 18" to be the target, then make a casting roll of 2D6.', effect: 'The target has Strike-last for the rest of the turn.' },
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Skaven Wizard to cast this spell, pick a visible enemy unit within 18" to be the target, then make a casting roll of 2D6.',
+            effect: 'The target has Strike-last for the rest of the turn.'
+          },
           castingValue: 7,
           phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
         },
@@ -1899,21 +2146,33 @@ const SKAVEN_OPTIONS: ArmyOptions = {
         {
           name: 'Filth-Crust',
           description: 'Prayer — Your Hero Phase',
-          actionDetails: { actionType: 'activated', declare: 'Pick a friendly Skaven Priest to chant this prayer, pick a visible friendly Skaven Infantry unit wholly within 13" to be the target, then make a chanting roll of D6.', effect: 'Add 1 to wound rolls for the target\'s combat attacks until the start of your next turn. In addition, if the chanting roll was 8+, the target\'s melee weapons have Crit (Mortal) until the start of your next turn.' },
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Skaven Priest to chant this prayer, pick a visible friendly Skaven Infantry unit wholly within 13" to be the target, then make a chanting roll of D6.',
+            effect: 'Add 1 to wound rolls for the target\'s combat attacks until the start of your next turn. In addition, if the chanting roll was 8+, the target\'s melee weapons have Crit (Mortal) until the start of your next turn.'
+          },
           chantingValue: 4,
           phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
         },
         {
           name: 'Bile-Torrent',
           description: 'Prayer — Your Hero Phase',
-          actionDetails: { actionType: 'activated', declare: 'Pick a friendly Skaven Priest to chant this prayer, pick a visible enemy unit within 13" to be the target, then make a chanting roll of D6.', effect: 'Roll a number of dice equal to the number of models in the target unit. For each 5+, inflict 1 mortal damage on the target. If the chanting roll was 8+, inflict 1 mortal damage on the target for each 4+ instead.' },
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Skaven Priest to chant this prayer, pick a visible enemy unit within 13" to be the target, then make a chanting roll of D6.',
+            effect: 'Roll a number of dice equal to the number of models in the target unit. For each 5+, inflict 1 mortal damage on the target. If the chanting roll was 8+, inflict 1 mortal damage on the target for each 4+ instead.'
+          },
           chantingValue: 4,
           phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
         },
         {
           name: 'Rabid-Tough',
           description: 'Prayer — Your Hero Phase',
-          actionDetails: { actionType: 'activated', declare: 'Pick a friendly Skaven Priest to chant this prayer, pick a visible friendly Skaven Infantry unit wholly within 13" to be the target, then make a chanting roll of D6.', effect: 'Subtract 1 from wound rolls for attacks that target that unit until the start of your next turn. In addition, if the chanting roll was 8+, add 1 to save rolls for the target until the start of your next turn.' },
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Skaven Priest to chant this prayer, pick a visible friendly Skaven Infantry unit wholly within 13" to be the target, then make a chanting roll of D6.',
+            effect: 'Subtract 1 from wound rolls for attacks that target that unit until the start of your next turn. In addition, if the chanting roll was 8+, add 1 to save rolls for the target until the start of your next turn.'
+          },
           chantingValue: 5,
           phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
         },
@@ -1930,7 +2189,10 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Blood Rites',
         description: 'Battle Trait: Daughters of Khaine',
-        actionDetails: { actionType: 'passive', effect: 'At the start of each battle round, friendly Daughters of Khaine units gain cumulative bonuses: Round 1 — +1 to run rolls, Round 2 — +1 to charge rolls, Round 3 — Ward (6+).' },
+        actionDetails: {
+          actionType: 'passive',
+          effect: 'At the start of each battle round, friendly Daughters of Khaine units gain cumulative bonuses: Round 1 — +1 to run rolls, Round 2 — +1 to charge rolls, Round 3 — Ward (6+).'
+        },
         phaseActivation: BattlePhase.START, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
       }],
     },
@@ -1940,7 +2202,7 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Fanatical Faith',
         description: 'Battle Trait: Daughters of Khaine',
-        actionDetails: { actionType: 'passive', effect: 'Friendly Daughters of Khaine units have Ward (6+).' },
+        actionDetails: {actionType: 'passive', effect: 'Friendly Daughters of Khaine units have Ward (6+).'},
         phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
       }],
     },
@@ -1952,7 +2214,10 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Frenzied Devotion',
         description: 'Battle Formation: Cauldron of Slaughter',
-        actionDetails: { actionType: 'passive', effect: 'Add 1 to the Attacks characteristic of melee weapons used by friendly Witch Aelves units.' },
+        actionDetails: {
+          actionType: 'passive',
+          effect: 'Add 1 to the Attacks characteristic of melee weapons used by friendly Witch Aelves units.'
+        },
         phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
       }],
     },
@@ -1962,7 +2227,11 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Shadowstrike',
         description: 'Battle Formation: Shadow Patrol',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Khinerai unit that was set up this turn.', effect: 'That unit can shoot in the shooting phase even if it ran this turn.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick a friendly Khinerai unit that was set up this turn.',
+          effect: 'That unit can shoot in the shooting phase even if it ran this turn.'
+        },
         phaseActivation: BattlePhase.SHOOTING, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
       }],
     },
@@ -1974,7 +2243,10 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Bathed in Blood',
         description: 'Heroic Trait',
-        actionDetails: { actionType: 'passive', effect: 'Each time this unit destroys an enemy model with a melee attack, Heal (1) this unit.' },
+        actionDetails: {
+          actionType: 'passive',
+          effect: 'Each time this unit destroys an enemy model with a melee attack, Heal (1) this unit.'
+        },
         phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
       }],
     },
@@ -1984,7 +2256,11 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Mistress of Illusion',
         description: 'Heroic Trait',
-        actionDetails: { actionType: 'activated', declare: 'Pick this unit.', effect: 'Remove this unit from the battlefield and set it up again more than 9" from all enemy units.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick this unit.',
+          effect: 'Remove this unit from the battlefield and set it up again more than 9" from all enemy units.'
+        },
         phaseActivation: BattlePhase.MOVEMENT, phaseActivationTiming: 'own', numberOfTimes: 'once',
       }],
     },
@@ -1996,7 +2272,10 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Crown of Woe',
         description: 'Artifact of Power',
-        actionDetails: { actionType: 'passive', effect: 'Subtract 1 from hit rolls for enemy units within 3" of the bearer.' },
+        actionDetails: {
+          actionType: 'passive',
+          effect: 'Subtract 1 from hit rolls for enemy units within 3" of the bearer.'
+        },
         phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'opponent', numberOfTimes: 'unlimited',
       }],
     },
@@ -2006,7 +2285,7 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Shadow Stone',
         description: 'Artifact of Power',
-        actionDetails: { actionType: 'passive', effect: 'The bearer has Ward (5+) against ranged attacks.' },
+        actionDetails: {actionType: 'passive', effect: 'The bearer has Ward (5+) against ranged attacks.'},
         phaseActivation: BattlePhase.SHOOTING, phaseActivationTiming: 'opponent', numberOfTimes: 'unlimited',
       }],
     },
@@ -2018,7 +2297,11 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Mindrazor',
         description: 'Spell Lore: Lore of Shadows',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Wizard to cast this spell, pick a friendly unit wholly within 12" as the target.', effect: 'If cast, improve the Rend of the target\'s melee weapons by 1 until your next hero phase.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick a friendly Wizard to cast this spell, pick a friendly unit wholly within 12" as the target.',
+          effect: 'If cast, improve the Rend of the target\'s melee weapons by 1 until your next hero phase.'
+        },
         castingValue: 7,
         phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
       }],
@@ -2029,7 +2312,11 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Catechism of Murder',
         description: 'Prayer Lore: Lore of Khaine',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Priest to chant this prayer, pick a friendly unit wholly within 12" as the target.', effect: 'If answered, add 1 to wound rolls for the target\'s melee attacks until your next hero phase.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick a friendly Priest to chant this prayer, pick a friendly unit wholly within 12" as the target.',
+          effect: 'If answered, add 1 to wound rolls for the target\'s melee attacks until your next hero phase.'
+        },
         chantingValue: 4,
         phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
       }],
@@ -2042,7 +2329,11 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Rune of Khaine',
         description: 'Prayer Lore: Prayers of the Bloody Handed',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Priest to chant this prayer, pick a friendly Daughters of Khaine unit wholly within 12" as the target.', effect: 'If answered, add 1 to the Attacks characteristic of the target\'s melee weapons until your next hero phase.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick a friendly Priest to chant this prayer, pick a friendly Daughters of Khaine unit wholly within 12" as the target.',
+          effect: 'If answered, add 1 to the Attacks characteristic of the target\'s melee weapons until your next hero phase.'
+        },
         chantingValue: 4,
         phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
       }],
@@ -2053,7 +2344,11 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
       actions: [{
         name: 'Crimson Rejuvenation',
         description: 'Prayer Lore: Prayers of the Slaughter Queen',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Priest to chant this prayer, pick a friendly Daughters of Khaine Hero within 12" as the target.', effect: 'If answered, Heal (D6) the target.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick a friendly Priest to chant this prayer, pick a friendly Daughters of Khaine Hero within 12" as the target.',
+          effect: 'If answered, Heal (D6) the target.'
+        },
         chantingValue: 4,
         phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
       }],
@@ -2064,114 +2359,340 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
 const SERAPHON_OPTIONS: ArmyOptions = {
   battleTraits: [
     {
-      name: 'Cosmic Power',
-      description: 'Seraphon channel the power of the stars.',
-      actions: [{
-        name: 'Cosmic Power',
-        description: 'Battle Trait: Seraphon',
-        actionDetails: { actionType: 'passive', effect: 'At the start of your hero phase, gain 1 Cosmic Power point. Friendly Seraphon Wizards can spend Cosmic Power points to add 1 to casting rolls (1 point per roll).' },
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
-      }],
-    },
-    {
-      name: 'Cold-blooded Resilience',
-      description: 'Seraphon shrug off damage with stoic resolve.',
-      actions: [{
-        name: 'Cold-blooded Resilience',
-        description: 'Battle Trait: Seraphon',
-        actionDetails: { actionType: 'passive', effect: 'Friendly Seraphon units have Ward (6+) while they are contesting an objective.' },
-        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
-      }],
+      name: 'The Great Plan',
+      description: 'Choose a cosmic power.',
+      actions: [
+        {
+          name: 'The Great Plan',
+          description: '',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick an Asterism ability',
+            effect: 'That Asterism ability can be used for the rest of the battle, but the others cannot, unless allowed by the \'Further the Great Plan\' ability.'
+          },
+          phaseActivation: BattlePhase.DEPLOYMENT,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'once',
+          armyWide: true
+        },
+        {
+          name: 'Further the Great Plan',
+          description: '',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Start of the third battle round. You can use this if you meet the condition that corresponds to the Asterism you picked in the deployment phase.',
+            effect: 'Pick a different Asterism ability. It can be used in addition to the one you picked in the deployment phase.'
+          },
+          phaseActivation: BattlePhase.START,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'once',
+          armyWide: true,
+        },
+        {
+          name: 'Itzl the Tamer',
+          description: 'Only active if chosen by the Great Plan.',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'Companion weapons used by friendly Serapahon units have Crit (2 Hits).'
+          },
+          phaseActivation: BattlePhase.ATTACK,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true,
+        },
+        {
+          name: 'Quetzl the Preserver',
+          description: 'Only active if chosen by the Great Plan.',
+          actionDetails: {
+            actionType: 'activated',
+            declare: '',
+            effect: 'Subtract 1 from the Rend characteristics of melee weapons for attacks that target friendly Seraphon units that are wholly within friendly territory.'
+          },
+          phaseActivation: BattlePhase.ATTACK,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true,
+        },
+        {
+          name: 'Sotek the deliverer',
+          description: 'Only active if chosen by the Great Plan.',
+          actionDetails: {
+            actionType: 'activated',
+            declare: '',
+            effect: 'Add 2 to the move characteristics of Seraphon units.'
+          },
+          phaseActivation: BattlePhase.MOVEMENT,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true,
+        },
+        {
+          name: 'Tepok the Seer',
+          description: 'Only active if chosen by the Great Plan.',
+          actionDetails: {
+            actionType: 'activated',
+            declare: '',
+            effect: 'Add 1 to the casting rolls for friendly Seraphon units.'
+          },
+          phaseActivation: BattlePhase.HERO,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true,
+        },
+      ],
     },
   ],
   battleFormations: [
     {
-      name: 'Thunder Lizard Cohort',
-      description: 'Massive beasts anchor the battleline.',
-      actions: [{
-        name: 'Behemoth Charge',
-        description: 'Battle Formation: Thunder Lizard Cohort',
-        actionDetails: { actionType: 'passive', effect: 'Add 1 to the Damage characteristic of melee weapons used by friendly Seraphon Monster units on the turn they charge.' },
-        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
-      }],
+      name: 'Eternal Starhost',
+      description: 'Teleport.',
+      actions: [
+        {
+          name: 'Celestial Translocation',
+          description: 'Battle Formation',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Seraphon unit wholly within 12" of a friendly Seraphon Wizard to use this ability',
+            effect: 'Roll a dice. On a 3+, remove that unit from the battlefield and set it up again on the battlefield more than 9" from all enemy units.'
+          },
+          phaseActivation: BattlePhase.MOVEMENT,
+          phaseActivationTiming: 'own',
+          numberOfTimes: 'perRound',
+          armyWide: true,
+        }
+      ],
     },
     {
-      name: 'Starborne Constellation',
-      description: 'Summoned warriors materialise from celestial light.',
-      actions: [{
-        name: 'Celestial Reinforcements',
-        description: 'Battle Formation: Starborne Constellation',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Seraphon unit in reserve.', effect: 'Set up that unit on the battlefield more than 9" from all enemy units.' },
-        phaseActivation: BattlePhase.MOVEMENT, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }],
+      name: 'Shadowstrike Starhost',
+      description: 'Dont pick this.',
+      actions: [
+        {
+          name: 'Nimble and Quick',
+          description: 'Battle Formation',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick up to 3 friendly Skink Infantry or Skink Cavalry units that are not in combat to be the targets',
+            effect: 'Each target can move D6". Each target cannot move into combat during any part of the move.'
+          },
+          phaseActivation: BattlePhase.SHOOTING,
+          phaseActivationTiming: 'own',
+          numberOfTimes: 'perRound',
+          armyWide: true,
+        }
+      ],
+    },
+    {
+      name: 'Sunclaw Starhost',
+      description: 'Applies to Aggradon Lancers and Kroxigors in battle.',
+      actions: [
+        {
+          name: 'Vengeance of Azyr',
+          description: 'Battle Formation',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick up to 3 friendly Saurus or Kroxigor units that are in combat to be the targets',
+            effect: 'For each target: Make a pile-in move. Then, pick an enemy units in combat with the target and roll a D3. On a 2+, inflict an amount of mortal damage on that enemy unit equal to the roll.'
+          },
+          phaseActivation: BattlePhase.END,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'perRound',
+          armyWide: true,
+        }
+      ],
+    },
+    {
+      name: 'Thunderquake Starhost',
+      description: 'Dont pick this.',
+      actions: [
+        {
+          name: 'Scaly Monstrosities',
+          description: 'Battle Formation',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'Add 2 to the Health characteristic of friendly Seraphon Monster units.'
+          },
+          phaseActivation: BattlePhase.START,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true,
+        }
+      ],
     },
   ],
   heroicTraits: [
     {
-      name: 'Ancient Knowledge',
-      description: 'This hero possesses millennia of arcane wisdom.',
+      name: 'Being of the Stars',
+      description: '',
       actions: [{
-        name: 'Ancient Knowledge',
+        name: 'Being of the Stars',
         description: 'Heroic Trait',
-        actionDetails: { actionType: 'passive', effect: 'Add 1 to casting rolls for this unit.' },
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
+        actionDetails: {
+          actionType: 'passive',
+          effect: 'Ignore modifiers to save rolls for this unit (postive and negatives).'
+        },
+        phaseActivation: BattlePhase.ATTACK,
+        phaseActivationTiming: 'any',
+        numberOfTimes: 'unlimited',
       }],
     },
     {
-      name: 'Predatory Instinct',
-      description: 'This leader hunts prey with primal ferocity.',
-      actions: [{
-        name: 'Predatory Instinct',
-        description: 'Heroic Trait',
-        actionDetails: { actionType: 'passive', effect: 'Add 1 to wound rolls for this unit\'s melee attacks targeting a unit that has fewer models than this unit.' },
-        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
-      }],
+      name: 'Reptilian Cunning',
+      description: '',
+      actions: [
+        {
+          name: 'Reptilian Cunning',
+          description: 'Heroic Trait',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'If this unit charged this turn, if a friendly unit wholly within 12" of this unit uses the \'All-out Attack\' command in the combat phase, no command points are spent.'
+          },
+          phaseActivation: BattlePhase.ATTACK,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+        }
+      ],
+    },
+    {
+      name: 'Beastmaster',
+      description: '',
+      actions: [
+        {
+          name: 'Beastmaster',
+          description: 'Heroic Trait',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'Add 2" to the Move characteristics of friendly Seraphon Cavalry and Seraphon Monster units for the rest of the phase if they are wholly within 12" of this unit at the start of the move.'
+          },
+          phaseActivation: BattlePhase.MOVEMENT,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+        }
+      ],
     },
   ],
   artifactsOfPower: [
     {
-      name: 'Prism of Amyntok',
-      description: 'A crystal that unleashes blinding celestial light.',
+      name: 'Coatl Familiar',
+      description: '',
       actions: [{
-        name: 'Prism of Amyntok',
+        name: 'Coatl Familiar',
         description: 'Artifact of Power',
-        actionDetails: { actionType: 'activated', declare: 'Pick the bearer to use this ability, pick a visible enemy unit within 12" as the target.', effect: 'Inflict D3 mortal damage on the target.' },
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'once',
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Reaction: You declared a Spell ability for a friendly Seraphon Wizard within this unit\'s combat range.',
+          effect: 'Add D6 to the casting roll for that spell.'
+        },
+        phaseActivation: BattlePhase.HERO,
+        phaseActivationTiming: 'any',
+        numberOfTimes: 'once',
       }],
     },
     {
-      name: 'Cloak of Feathers',
-      description: 'A supernatural shroud that deflects incoming missiles.',
+      name: 'Incadescent Rectrices',
+      description: '',
       actions: [{
-        name: 'Cloak of Feathers',
+        name: 'Incadescent Rectrices',
         description: 'Artifact of Power',
-        actionDetails: { actionType: 'passive', effect: 'Subtract 1 from hit rolls for ranged attacks targeting the bearer.' },
-        phaseActivation: BattlePhase.SHOOTING, phaseActivationTiming: 'opponent', numberOfTimes: 'unlimited',
+        actionDetails: {
+          actionType: 'activated',
+          declare: '',
+          effect: 'Heal (D3) this unit.'
+        },
+        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'any', numberOfTimes: 'perRound',
+      }],
+    },
+    {
+      name: 'Bloodrage Pendant',
+      description: '',
+      actions: [{
+        name: 'Bloodrage Pendant',
+        description: 'Artifact of Power',
+        actionDetails: {
+          actionType: 'passive',
+          effect: 'Add 1 to the attacks characteristics of this unit\'s melee weapons. Add 2 instead if the number of damage points allocated to this unit is equal to or greater than half of this unit\'s Health characteristic (rounding up).'
+        },
+        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
       }],
     },
   ],
   spellLore: [
     {
       name: 'Lore of Celestial Manipulation',
-      description: 'Bend reality with the power of Azyr.',
-      actions: [{
-        name: 'Celestial Deliverance',
-        description: 'Spell Lore: Lore of Celestial Manipulation',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Wizard to cast this spell, pick up to 3 visible enemy units within 18" as targets.', effect: 'If cast, inflict 1 mortal damage on each target.' },
-        castingValue: 7,
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }],
+      description: '',
+      actions: [
+        {
+          name: 'Mystical Unforging',
+          description: 'Spell Lore: Debuff rend of enemy unit',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Seraphon Wizard to cast this spell, pick a visible enemy unit within 12" of them to be the target, then make a casting roll of 2D6.',
+            effect: 'Subtract 1 from the Rend characteristics of the target\'s weapons until the start of your next turn.'
+          },
+          castingValue: 6,
+          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
+        },
+        {
+          name: 'Comet\'s Call',
+          description: 'Spell Lore: Do damage to enemy, scaling with number of models in their unit',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Seraphon Wizard to cast this spell, pick a visible enemy unit within 18" of them to be the target, then make a casting roll of 2D6.',
+            effect: 'Roll a dice for each model in the target unit. For each 5+, inflict 1 mortal damage on the target.'
+          },
+          castingValue: 7,
+          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
+        },
+        {
+          name: 'Speed of Huanchi',
+          description: 'Spell Lore: Let a unit Run and still shoot/charge',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Seraphon Wizard to cast this spell, pick a visible friendly Seraphon unit wholly within 12" of them to be the target, then make a casting roll of 2D6.',
+            effect: 'Until the start of your next turn, the target can use a Run ability and still use Shoot and/or Charge abilities later in the turn.'
+          },
+          castingValue: 6,
+          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
+        }
+      ],
     },
     {
       name: 'Lore of Primal Jungles',
-      description: 'Invoke the savage power of the primordial jungles.',
-      actions: [{
-        name: 'Itzl\'s Savage Focus',
-        description: 'Spell Lore: Lore of Primal Jungles',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Wizard to cast this spell, pick a friendly Seraphon unit wholly within 12" as the target.', effect: 'If cast, add 1 to the Attacks characteristic of the target\'s melee weapons until your next hero phase.' },
-        castingValue: 6,
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }],
+      description: '',
+      actions: [
+        {
+          name: 'Light of Chotec',
+          description: 'Spell Lore: Heal unit',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Seraphon Wizard to cast this spell, pick a visible friendly Seraphon unit wholly within 12" of them to be the target, then make a casting roll of 2D6.',
+            effect: 'Roll a number of dice equal to the number of damage points the target has. For each 4+, Heal (1) the target.'
+          },
+          castingValue: 6,
+          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
+        },
+        {
+          name: 'The Earth Trembles',
+          description: 'Spell Lore: Deal damage to everything in a line',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Seraphon Wizard to cast this spell, pick a point on the battlefield within 18" of them to be the target point, then make a casting roll of 2D6.',
+            effect: 'Draw a straight line between the target point and the closest part on the caster\'s base. Roll a D3 for each unit (friendly and enemy) that has models passed across by this line. On a 2+, inflict an amount of mortal damage on that unit equal to the roll.'
+          },
+          castingValue: 8,
+          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
+        },
+        {
+          name: 'Empowered Celestite',
+          description: 'Spell Lore: Buff a unit\'s rend',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Seraphon Wizard to cast this spell, pick a visible friendly Seraphon unit wholly within 12" of them to be the target, then make a casting roll of 2D6.',
+            effect: 'Add 1 to the Rend characteristic of the target\'s melee weapons for the rest of the turn.'
+          },
+          castingValue: 6,
+          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
+        },
+      ],
     },
   ],
   prayerLore: [],
@@ -2199,7 +2720,7 @@ export class HomeComponent implements AfterViewInit {
 
   battleRound = 1;
   commandPoints = 0;
-  stage: RoundStage = { type: 'deployment' };
+  stage: RoundStage = {type: 'deployment'};
   firstTurnIsOwn = true;
 
   private usedOnce = new Set<string>();
@@ -2372,7 +2893,7 @@ export class HomeComponent implements AfterViewInit {
 
   pickPriority(ownFirst: boolean): void {
     this.firstTurnIsOwn = ownFirst;
-    this.stage = { type: 'startActions' };
+    this.stage = {type: 'startActions'};
   }
 
   adjustCommandPoints(delta: number): void {
@@ -2382,22 +2903,22 @@ export class HomeComponent implements AfterViewInit {
   goToStep(stepKey: string): void {
     if (stepKey === 'deployment') {
       if (this.battleRound !== 1) return;
-      this.stage = { type: 'deployment' };
+      this.stage = {type: 'deployment'};
       return;
     }
 
     if (stepKey === 'start') {
       // If already past priority pick, go to start actions; otherwise priority picker
       if (this.stage.type === 'turn' || this.stage.type === 'end' || this.stage.type === 'startActions') {
-        this.stage = { type: 'startActions' };
+        this.stage = {type: 'startActions'};
       } else {
-        this.stage = { type: 'start' };
+        this.stage = {type: 'start'};
       }
       return;
     }
 
     if (stepKey === 'end') {
-      this.stage = { type: 'end' };
+      this.stage = {type: 'end'};
       return;
     }
 
@@ -2408,7 +2929,7 @@ export class HomeComponent implements AfterViewInit {
     const phaseIndex = Number(match[2]);
     if (phaseIndex < 0 || phaseIndex >= TURN_PHASES.length) return;
 
-    this.stage = { type: 'turn', playerIndex: playerIndex as 0 | 1, phaseIndex };
+    this.stage = {type: 'turn', playerIndex: playerIndex as 0 | 1, phaseIndex};
 
     // Allow DOM to settle before checking overflow state.
     setTimeout(() => this.updatePhaseBarOverflow());
@@ -2432,7 +2953,7 @@ export class HomeComponent implements AfterViewInit {
     this.unitCommandUsed.clear();
 
     if (this.stage.type === 'deployment') {
-      this.stage = { type: 'start' };
+      this.stage = {type: 'start'};
       return;
     }
 
@@ -2442,7 +2963,7 @@ export class HomeComponent implements AfterViewInit {
     }
 
     if (this.stage.type === 'startActions') {
-      this.stage = { type: 'turn', playerIndex: 0, phaseIndex: 0 };
+      this.stage = {type: 'turn', playerIndex: 0, phaseIndex: 0};
       return;
     }
 
@@ -2450,13 +2971,13 @@ export class HomeComponent implements AfterViewInit {
       const nextPhaseIdx = this.stage.phaseIndex + 1;
       if (nextPhaseIdx < TURN_PHASES.length) {
         // Next phase within same player's turn
-        this.stage = { type: 'turn', playerIndex: this.stage.playerIndex, phaseIndex: nextPhaseIdx };
+        this.stage = {type: 'turn', playerIndex: this.stage.playerIndex, phaseIndex: nextPhaseIdx};
       } else if (this.stage.playerIndex === 0) {
         // First player done → start second player's turn from Hero phase
-        this.stage = { type: 'turn', playerIndex: 1, phaseIndex: 0 };
+        this.stage = {type: 'turn', playerIndex: 1, phaseIndex: 0};
       } else {
         // Second player done → end of round
-        this.stage = { type: 'end' };
+        this.stage = {type: 'end'};
       }
       return;
     }
@@ -2466,7 +2987,7 @@ export class HomeComponent implements AfterViewInit {
       this.battleRound++;
       this.usedThisRound.clear();
       this.commandPoints += 3;
-      this.stage = { type: 'start' };
+      this.stage = {type: 'start'};
     }
   }
 
@@ -2475,13 +2996,13 @@ export class HomeComponent implements AfterViewInit {
     this.unitCommandUsed.clear();
 
     if (this.stage.type === 'start' && this.battleRound === 1) {
-      this.stage = { type: 'deployment' };
+      this.stage = {type: 'deployment'};
       return;
     }
 
     if (this.stage.type === 'end') {
       // Back to second player's last phase
-      this.stage = { type: 'turn', playerIndex: 1, phaseIndex: TURN_PHASES.length - 1 };
+      this.stage = {type: 'turn', playerIndex: 1, phaseIndex: TURN_PHASES.length - 1};
       return;
     }
 
@@ -2490,19 +3011,19 @@ export class HomeComponent implements AfterViewInit {
     }
 
     if (this.stage.type === 'startActions') {
-      this.stage = { type: 'start' };
+      this.stage = {type: 'start'};
       return;
     }
 
     if (this.stage.type === 'turn') {
       if (this.stage.phaseIndex > 0) {
-        this.stage = { type: 'turn', playerIndex: this.stage.playerIndex, phaseIndex: this.stage.phaseIndex - 1 };
+        this.stage = {type: 'turn', playerIndex: this.stage.playerIndex, phaseIndex: this.stage.phaseIndex - 1};
       } else if (this.stage.playerIndex === 1) {
         // Back to first player's last phase
-        this.stage = { type: 'turn', playerIndex: 0, phaseIndex: TURN_PHASES.length - 1 };
+        this.stage = {type: 'turn', playerIndex: 0, phaseIndex: TURN_PHASES.length - 1};
       } else {
         // Back to start actions
-        this.stage = { type: 'startActions' };
+        this.stage = {type: 'startActions'};
       }
       return;
     }

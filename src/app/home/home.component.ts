@@ -1461,66 +1461,176 @@ const STORMCAST_OPTIONS: ArmyOptions = {
   battleFormations: [
     {
       name: 'Sentinels of the Bleak Citadels',
-      description: 'A balanced Stormcast formation with sturdy Liberators at its core.',
-      actions: [{
-        name: 'Ancient Aura',
-        description: '',
-        actionDetails: { actionType: 'passive', effect: 'Friendly Liberators units have Ward (6+) while they are contesting an objective.' },
-        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
-      }],
+      description: 'Give ward to Ruination Chamber units during hero phase.',
+      actions: [
+        {
+          name: 'Ancient Aura',
+          description: 'Give ward to Ruination Chamber units during hero phase',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Once per turn (Army), pick a friendly Ruination Chamber unit.',
+            effect: 'That unit has Ward (5+) for the rest of the turn.'
+          },
+          phaseActivation: BattlePhase.HERO,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true
+        },
+      ],
     },
     {
-      name: 'Ruination Chamber',
-      description: 'Unleashed Reclusians bring devastating force.',
+      name: 'Thunderhead Host',
+      description: 'Boost hit rolls of Warrior Chamber units next to other allies.',
+      actions: [
+        {
+          name: 'Synchronized Strikes',
+          description: 'Boost hit rolls of Warrior Chamber units next to other allies.',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'Add 1 to hit rolls for combat attacks made by friendly Warrior Chamber units while they are wholly within 12" of any friendly non-Hero Stormcast Eternals units that do not have the Warrior Chamber keyword.'
+          },
+          phaseActivation: BattlePhase.ATTACK,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true
+        },
+      ],
+    },
+    {
+      name: 'Vanguard Wing',
+      description: 'Dont pick this.',
       actions: [{
-        name: 'Unleashed Fury',
-        description: 'Battle Formation: Ruination Chamber',
-        actionDetails: { actionType: 'passive', effect: 'Add 1 to charge rolls for friendly Reclusians units.' },
-        phaseActivation: BattlePhase.CHARGE, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
-      }],
+        name: 'Peerless Manoeuvres',
+        description: 'Dont pick this.',
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick a friendly Vanguard Chamber unit that is not in combat.',
+          effect: 'Roll a dice. On a 3+, remove that unit from the battlefield and set it up again anywhere on the battlefield more than 9" from all enemy units.'
+        },
+        phaseActivation: BattlePhase.MOVEMENT,
+        phaseActivationTiming: 'own',
+        numberOfTimes: 'perRound',
+        armyWide: true
+      },
+      ],
+    },
+    {
+      name: 'Lightning Echelon',
+      description: 'Dont pick this.',
+      actions: [{
+        name: 'Oncoming Storm',
+        description: 'Dont pick this.',
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick a friendly Extremis Chamber unit that has charged this turn.',
+          effect: 'Roll a dice. On a 3+, that unit has Strike-First for the rest of the turn.'
+        },
+        phaseActivation: BattlePhase.ATTACK,
+        phaseActivationTiming: 'any',
+        numberOfTimes: 'perRound',
+        armyWide: true
+      },
+      ],
     },
   ],
   heroicTraits: [
     {
       name: 'Staunch Defender',
-      description: 'This hero inspires nearby allies to hold firm.',
+      description: 'Buff allied control score.',
       actions: [{
         name: 'Staunch Defender',
-        description: 'Heroic Trait',
-        actionDetails: { actionType: 'passive', effect: 'Friendly units wholly within 6" of this unit have Ward (6+).' },
-        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'opponent', numberOfTimes: 'unlimited',
-      }],
+        description: 'Buff allied control score.',
+        actionDetails: {
+          actionType: 'passive',
+          effect: 'While this unit is contesting an objective in friendly territory, add 3 to the control scores of all friendly Stormcast Eternals units contesting that objective.'
+        },
+        phaseActivation: BattlePhase.END,
+        phaseActivationTiming: 'any',
+        numberOfTimes: 'unlimited'
+      },
+      ],
     },
     {
-      name: 'Zealous Crusader',
-      description: 'This hero surges forward to meet the foe.',
+      name: 'Shock and Awe',
+      description: 'Dont pick this?.',
       actions: [{
-        name: 'Zealous Crusader',
-        description: 'Heroic Trait',
-        actionDetails: { actionType: 'passive', effect: 'Add 2" to this unit\'s Move characteristic.' },
-        phaseActivation: BattlePhase.MOVEMENT, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
-      }],
+        name: 'Shock and Awe',
+        description: 'Dont pick this?',
+        actionDetails: {
+          actionType: 'passive',
+          effect: 'Each time a friendly Stormcast Eternals unit is set up wholly within 12" of this unit using the \'Scions of the Storm\' ability, subtract 1 from hit rolls for attacks that target that unit for the rest of the battle round.'
+        },
+        phaseActivation: BattlePhase.ATTACK,
+        phaseActivationTiming: 'any',
+        numberOfTimes: 'unlimited'
+      },
+      ],
+    },
+    {
+      name: 'Envoy of the Heavens',
+      description: 'Buff ally after ally dies.',
+      actions: [{
+        name: 'Envoy of the Heavens',
+        description: 'Buff ally after ally dies.',
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'If a friendly unit was destroyed in the previous turn, pick a visible friendly Stormcast Eternals unit wholly within 12" of this unit to be the target',
+          effect: 'The target has Ward (5+) until the start of your next turn'
+        },
+        phaseActivation: BattlePhase.HERO,
+        phaseActivationTiming: 'own',
+        numberOfTimes: 'unlimited'
+      },
+      ],
     },
   ],
   artifactsOfPower: [
     {
-      name: 'Mirrorshield',
-      description: 'A gleaming shield that turns aside deadly blows.',
+      name: 'Null Pendant',
+      description: 'Debuff control score of opponent.',
       actions: [{
-        name: 'Mirrorshield',
-        description: 'Artifact of Power',
-        actionDetails: { actionType: 'passive', effect: 'The bearer has Ward (4+) against mortal damage.' },
-        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
-      }],
+        name: 'Null Pendant',
+        description: 'Buff ally after ally dies.',
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Once per battle, pick an enemy unit in combat with this unit to be the target',
+          effect: 'Subtract 5 from the target\'s control score for the rest of the turn'
+        },
+        phaseActivation: BattlePhase.END,
+        phaseActivationTiming: 'any',
+        numberOfTimes: 'once'
+      },
+      ],
     },
     {
       name: 'Quicksilver Draught',
-      description: 'A potent elixir that grants supernatural swiftness.',
+      description: 'Buff unit once.',
       actions: [{
         name: 'Quicksilver Draught',
         description: 'Artifact of Power',
-        actionDetails: { actionType: 'activated', declare: 'Pick the bearer to use this ability.', effect: 'The bearer strikes first in the combat phase this turn. This artifact can only be used once per battle.' },
-        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'own', numberOfTimes: 'once',
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Once per Battle.',
+          effect: 'This unit has Strike-First for the rest of the turn.'
+        },
+        phaseActivation: BattlePhase.ATTACK,
+        phaseActivationTiming: 'any',
+        numberOfTimes: 'once',
+      }],
+    },
+    {
+      name: 'Mirrorshield',
+      description: 'Against shooting attacks.',
+      actions: [{
+        name: 'Mirrorshield',
+        description: 'Artifact of Power',
+        actionDetails: {
+          actionType: 'passive',
+          effect: 'This unit cannot be targeted by shooting attacks unless the attacking model is within 9" of it.'
+        },
+        phaseActivation: BattlePhase.SHOOTING,
+        phaseActivationTiming: 'any',
+        numberOfTimes: 'unlimited',
       }],
     },
   ],
@@ -1528,24 +1638,58 @@ const STORMCAST_OPTIONS: ArmyOptions = {
     {
       name: 'Lore of the Storm',
       description: 'Harness Sigmar\'s lightning to smite the enemy.',
-      actions: [{
+      actions: [
+        {
         name: 'Lightning Blast',
         description: 'Spell Lore: Lore of the Storm',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Wizard to cast this spell, pick a visible enemy unit within 18" as the target.', effect: 'If cast, inflict D3 mortal damage on the target.' },
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick a friendly Wizard to cast this spell, then pick the closest visible enemy unit to them that has not been picked to be the target of this ability this turn to be the target. If 2 or more visible enemy units are tied to be the closest, you can pick which is the target. Then, make a casting roll of 2D6.',
+          effect: 'Inflict D3 mortal damage on the target.'
+        },
         castingValue: 5,
         phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }],
+      }
+      ],
     },
     {
-      name: 'Lore of Celestial Domination',
-      description: 'Command the heavens to bolster your forces.',
-      actions: [{
-        name: 'Celestial Barrier',
-        description: 'Spell Lore: Lore of Celestial Domination',
-        actionDetails: { actionType: 'activated', declare: 'Pick a friendly Wizard to cast this spell, pick a friendly unit wholly within 12" as the target.', effect: 'If cast, the target has Ward (5+) until your next hero phase.' },
-        castingValue: 6,
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }],
+      name: 'Lore of the Storm',
+      description: 'Harness Sigmar\'s lightning to smite the enemy.',
+      actions: [
+        {
+          name: 'Lightning Blast',
+          description: 'Spell Lore: Deal damage to closest enemy',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Wizard to cast this spell, then pick the closest visible enemy unit to them that has not been picked to be the target of this ability this turn to be the target. If 2 or more visible enemy units are tied to be the closest, you can pick which is the target. Then, make a casting roll of 2D6.',
+            effect: 'Inflict D3 mortal damage on the target.'
+          },
+          castingValue: 5,
+          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
+        },
+        {
+          name: 'Thundershock',
+          description: 'Spell Lore: Debuff enemies attacks',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Wizard to cast this spell, pick a visible enemy unit within 12" of them to be the target, then make a casting roll of 2D6.',
+            effect: 'Subtract 1 from wound rolls for the target\'s attacks until the start of your next turn.'
+          },
+          castingValue: 6,
+          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
+        },
+        {
+          name: 'Starfall',
+          description: 'Spell Lore: Reduce number of charge rolls of enemy',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly Wizard to cast this spell, pick a visible enemy Infantry or Cavalry unit within 18" of them to be the target, then make a casting roll of 2D6.',
+            effect: 'Until the start of your next turn, subtract 1 from the number of dice rolled when making charge rolls for the target, to a minimum of 1.'
+          },
+          castingValue: 7,
+          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
+        }
+      ],
     },
   ],
   prayerLore: [

@@ -1,0 +1,138 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+:root {
+	--black: #404231;
+
+	/*c1*/
+	--1c0: #7a8963;
+	 --1c7: #5c674a;
+	
+	/*c2*/
+	--2c1: #caccbc;
+	
+	/*c3*/
+	 --3c-2: #f9e8d3;
+	 --3c5: #a58154;
+	 --3c6: #8d6e48;
+	  --3c8: #5e4930;
+	
+	/*c4*/
+	 --4c0: #ececdc;
+	
+	/*c5*/
+	 
+
+  --legendary: #F76F00;
+  --veryrare: #C212E5;
+  --rare: #E0009D;
+  --uncommon: #3B0DE2;
+  --common: #404231;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Lato', sans-serif;
+  font-family: 'Oswald', sans-serif;
+}
+
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  padding: 0 20px;
+  background: var(--3c8);
+  color: var(--3c8);
+}
+
+.lettermenu {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+	margin-top: 1em;
+}
+
+.lettermenu-item {
+	margin: 0 10px;
+	font-size: 18px;
+	color: var(--3c-2);
+}
+
+.current{
+	font-weight: bold;
+}
+
+
+.Legendary{
+	color:var(--legendary);
+}
+
+.Varyrare{
+	color: var(--veryrare);
+}
+
+.Rare{
+	color: var(--rare);
+}
+
+.Uncommon{
+	color: var(--uncommon);
+}
+
+.Common{
+	color: var(--common);
+}
+
+
+.item-card {
+	border: 1px solid var(--4c0);
+	border-radius: 8px;
+	margin: 20px;
+	padding: 15px;
+	background-color: var(--4c0);
+	width: 300px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s;
+	display: inline-block;
+	vertical-align: top;
+}
+
+.item-card:hover {
+	transform: scale(1.05);
+}
+
+.item-image {
+	width: 100%;
+	height: auto;
+	border-radius: 4px;
+	margin-bottom: 10px;
+}
+
+.item-name {
+	text-align: center;
+	font-size: 1,1em;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.item-rarity {
+	font-size: 1em;
+	color: var(--1c7);
+	margin-bottom: 5px;
+	margin-left: 0.5em;
+}
+
+.item-cost {
+	font-size: 1em;
+	margin-left: 0.5em;
+}

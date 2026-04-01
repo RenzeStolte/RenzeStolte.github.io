@@ -250,6 +250,30 @@ const MUSICIAN_ABILITY: BattleAction = {
   numberOfTimes: 'unlimited',
 };
 
+const STANDARD_BEARER_ABILITY: BattleAction = {
+  name: 'Standard Bearer',
+  description: '',
+  actionDetails: {
+    actionType: 'passive',
+    effect: 'While this unit contains any standard bearers, add 1 to this unit\'s control score.',
+  },
+  phaseActivation: BattlePhase.END,
+  phaseActivationTiming: 'any',
+  numberOfTimes: 'unlimited',
+};
+
+const GUARDED_HERO_ABILITY: BattleAction = {
+  name: 'Guarded Hero',
+  description: '',
+  actionDetails: {
+    actionType: 'passive',
+    effect: 'If this Hero is within the combat range of a friendly unit that is not a Hero: subtract 1 from hit rolls for shooting attacks that target this Hero. If this Hero is Infantry, they cannot be picked as the target of shooting attacks made by units more than 12" from them.',
+  },
+  phaseActivation: BattlePhase.SHOOTING,
+  phaseActivationTiming: 'any',
+  numberOfTimes: 'unlimited',
+};
+
 const UNBIND_ABILITY: BattleAction = {
   name: 'Unbind',
   description: 'Reaction: Your opponent declared a spell ability.',
@@ -305,8 +329,14 @@ function withCoreAbilities(army: Army): Army {
       if (unit.keywords.includes('Musician') && !existing.has('musician')) {
         extras.push(cloneAction(MUSICIAN_ABILITY));
       }
+      if (unit.keywords.includes('Standard Bearer') && !existing.has('standard bearer')) {
+        extras.push(cloneAction(STANDARD_BEARER_ABILITY));
+      }
       if (unitIsWizard(unit) && !existing.has('unbind')) {
         extras.push(cloneAction(UNBIND_ABILITY));
+      }
+      if (unit.keywords.includes('Hero') && !existing.has('guarded hero')) {
+        extras.push(cloneAction(GUARDED_HERO_ABILITY));
       }
       if (unitIsWizardOrPriest(unit) && !existing.has('magical intervention')) {
         extras.push(cloneAction(MAGICAL_INTERVENTION));
@@ -2185,174 +2215,342 @@ const SKAVEN_OPTIONS: ArmyOptions = {
 const DAUGHTERS_OPTIONS: ArmyOptions = {
   battleTraits: [
     {
-      name: 'Blood Rites',
-      description: 'The Daughters of Khaine grow in murderous fervour as battle progresses.',
-      actions: [{
-        name: 'Blood Rites',
-        description: 'Battle Trait: Daughters of Khaine',
-        actionDetails: {
-          actionType: 'passive',
-          effect: 'At the start of each battle round, friendly Daughters of Khaine units gain cumulative bonuses: Round 1 — +1 to run rolls, Round 2 — +1 to charge rolls, Round 3 — Ward (6+).'
+      name: 'All-out Slaughter',
+      description: '',
+      actions: [
+        {
+          name: 'All-out Slaughter',
+          description: 'Battle Trait: Daughters of Khaine',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly DoK Infantry unit that is in combat to use this ability.',
+            effect: 'That unit can use 2 Fight abilities this phase. After the first is used, this unit has Strike-last for the rest of the turn.'
+          },
+          phaseActivation: BattlePhase.ATTACK,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'once',
+          armyWide: true,
+          commandPointCost: 1
         },
-        phaseActivation: BattlePhase.START, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
-      }],
-    },
-    {
-      name: 'Fanatical Faith',
-      description: 'Zealous devotion shields the faithful.',
-      actions: [{
-        name: 'Fanatical Faith',
-        description: 'Battle Trait: Daughters of Khaine',
-        actionDetails: {actionType: 'passive', effect: 'Friendly Daughters of Khaine units have Ward (6+).'},
-        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
-      }],
+        {
+          name: 'Blood Rites',
+          description: 'Battle Trait: Daughters of Khaine',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'A different effect applies to friendly DoK units each battle round, as shown below. The effects of all previous battle rounds also apply to those units.'
+          },
+          phaseActivation: BattlePhase.START,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true,
+        },
+        {
+          name: 'Blood Rites: 1',
+          description: 'Battle Trait: Daughters of Khaine',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'Add 1 to run rolls for all DoK units'
+          },
+          phaseActivation: BattlePhase.MOVEMENT,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true,
+        },
+        {
+          name: 'Blood Rites: 2',
+          description: 'Battle Trait: Daughters of Khaine',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'Add 1 to charge rolls for all DoK units'
+          },
+          phaseActivation: BattlePhase.CHARGE,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true,
+        },
+        {
+          name: 'Blood Rites: 3',
+          description: 'Battle Trait: Daughters of Khaine',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'Add 1 to hit rolls for all DoK units'
+          },
+          phaseActivation: BattlePhase.ATTACK,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true,
+        },
+        {
+          name: 'Blood Rites: 4',
+          description: 'Battle Trait: Daughters of Khaine',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'Add 1 to wound rolls for all DoK units'
+          },
+          phaseActivation: BattlePhase.ATTACK,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true,
+        },
+        {
+          name: 'Blood Rites: 5',
+          description: 'Battle Trait: Daughters of Khaine',
+          actionDetails: {
+            actionType: 'passive',
+            effect: 'Add 1 to the Attacks characteristic of all DoK units melee weapons'
+          },
+          phaseActivation: BattlePhase.ATTACK,
+          phaseActivationTiming: 'any',
+          numberOfTimes: 'unlimited',
+          armyWide: true,
+        }
+      ],
     },
   ],
   battleFormations: [
     {
-      name: 'Cauldron of Slaughter',
-      description: 'Witch Aelves whip themselves into a killing frenzy.',
+      name: 'Scathcoven',
+      description: '',
       actions: [{
-        name: 'Frenzied Devotion',
-        description: 'Battle Formation: Cauldron of Slaughter',
+        name: 'Speed of the Scathborn',
+        description: 'Battle Formation: Scathcoven',
         actionDetails: {
           actionType: 'passive',
-          effect: 'Add 1 to the Attacks characteristic of melee weapons used by friendly Witch Aelves units.'
+          effect: 'If the unmodified charge roll for a friendly Melusai or Khinerai unit is 8+, that unit has Strike-First for the rest of the turn.'
         },
-        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
+        phaseActivation: BattlePhase.CHARGE,
+        phaseActivationTiming: 'any',
+        numberOfTimes: 'unlimited',
+        armyWide: true,
       }],
     },
     {
       name: 'Shadow Patrol',
-      description: 'Khinerai strike from the shadows without warning.',
+      description: '',
       actions: [{
-        name: 'Shadowstrike',
+        name: 'Shadowpaths',
         description: 'Battle Formation: Shadow Patrol',
         actionDetails: {
           actionType: 'activated',
-          declare: 'Pick a friendly Khinerai unit that was set up this turn.',
-          effect: 'That unit can shoot in the shooting phase even if it ran this turn.'
+          declare: 'Pick a friendly DoK infantry unit that is not in combat to use this ability.',
+          effect: 'Roll a dice. On a 3+, remove that unit from the battlefield and set it up again on the battlefield more than 9" from all enemy units.'
         },
-        phaseActivation: BattlePhase.SHOOTING, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
+        phaseActivation: BattlePhase.MOVEMENT,
+        phaseActivationTiming: 'own',
+        numberOfTimes: 'perRound',
+        linkedGroup: 'Shadowpaths',
+        armyWide: true,
+      }],
+    },
+    {
+      name: 'Cauldron Guard',
+      description: '',
+      actions: [{
+        name: 'Frenzied Devotees',
+        description: 'Battle Formation: Cauldron Guard',
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick up to 3 friendly DoK Infantry or War Machine units that are in combat to be the targets.',
+          effect: 'For each target: Make a pile-in move. Then, pick an enemy unit in combat with the target and roll a D3. On a 2+, inflict an amount of mortal damage on that enemy unit equal to the roll.'
+        },
+        phaseActivation: BattlePhase.END,
+        phaseActivationTiming: 'any',
+        numberOfTimes: 'perRound',
+        linkedGroup: 'Frenzied Devotees',
+        armyWide: true,
+      }],
+    },
+    {
+      name: 'Slaughter Troupe',
+      description: '',
+      actions: [{
+        name: 'Gladiatorial Acrobatics',
+        description: 'Battle Formation: Slaughter Troupe',
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Reaction: You declared a Charge ability for a friendly DoK Aelf unit',
+          effect: 'Change one of the dice in the charge roll to a 4'
+        },
+        phaseActivation: BattlePhase.CHARGE,
+        phaseActivationTiming: 'any',
+        numberOfTimes: 'perRound',
+        linkedGroup: 'Gladiatorial Acrobatics',
+        armyWide: true,
       }],
     },
   ],
   heroicTraits: [
     {
+      name: 'Master of Poisons',
+      description: '',
+      actions: [{
+        name: 'Master of Poisons',
+        description: 'Heroic Trait',
+        actionDetails: {
+          actionType: 'activated',
+          declare: 'Pick an enemy unit that had any damage points allocated to it this turn by this unit\'s combat attacks to be the target.',
+          effect: 'For the rest of the battle: The target cannot be healed. Slain models cannot be returned to the target unit.'
+        },
+        phaseActivation: BattlePhase.END, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
+      }],
+    },
+    {
       name: 'Bathed in Blood',
-      description: 'This hero heals with every kill.',
+      description: '',
       actions: [{
         name: 'Bathed in Blood',
         description: 'Heroic Trait',
         actionDetails: {
-          actionType: 'passive',
-          effect: 'Each time this unit destroys an enemy model with a melee attack, Heal (1) this unit.'
+          actionType: 'activated',
+          declare: '',
+          effect: 'Heal (3) this unit if it is in combat.'
         },
-        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'own', numberOfTimes: 'unlimited',
+        phaseActivation: BattlePhase.END, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
       }],
     },
     {
-      name: 'Mistress of Illusion',
-      description: 'This hero can vanish and reappear elsewhere.',
+      name: 'Zealous Orator',
+      description: '',
       actions: [{
-        name: 'Mistress of Illusion',
+        name: 'Zealous Orator',
         description: 'Heroic Trait',
         actionDetails: {
-          actionType: 'activated',
-          declare: 'Pick this unit.',
-          effect: 'Remove this unit from the battlefield and set it up again more than 9" from all enemy units.'
+          actionType: 'passive',
+          effect: 'If a friendly unit wholly within 12" of this unit uses the \'Rally\' command, you can make 3 additional rally rolls of D6.'
         },
-        phaseActivation: BattlePhase.MOVEMENT, phaseActivationTiming: 'own', numberOfTimes: 'once',
+        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
       }],
     },
   ],
   artifactsOfPower: [
     {
-      name: 'Crown of Woe',
-      description: 'An aura of despair saps enemy resolve.',
+      name: 'Khainite Pendant',
+      description: '',
       actions: [{
-        name: 'Crown of Woe',
-        description: 'Artifact of Power',
+        name: 'Khainite Pendant',
+        description: '',
         actionDetails: {
-          actionType: 'passive',
-          effect: 'Subtract 1 from hit rolls for enemy units within 3" of the bearer.'
+          actionType: 'activated',
+          declare: 'Pick a friendly DoK Priest wholly within 12" of this unit.',
+          effect: 'Give that unit D6 ritual points.'
         },
-        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'opponent', numberOfTimes: 'unlimited',
+        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'once',
       }],
     },
     {
-      name: 'Shadow Stone',
-      description: 'An enchanted gem that shields the bearer from harm.',
+      name: 'Sevenfold Shadows',
+      description: '',
       actions: [{
-        name: 'Shadow Stone',
-        description: 'Artifact of Power',
-        actionDetails: {actionType: 'passive', effect: 'The bearer has Ward (5+) against ranged attacks.'},
-        phaseActivation: BattlePhase.SHOOTING, phaseActivationTiming: 'opponent', numberOfTimes: 'unlimited',
+        name: 'Sevenfold Shadows',
+        description: '',
+        actionDetails: {
+          actionType: 'activated',
+          declare: '',
+          effect: 'If this unit is not in combat, remove it from the battlefield and set it up again on the battlefield more than 9" from all enemy units.'
+        },
+        phaseActivation: BattlePhase.MOVEMENT, phaseActivationTiming: 'own', numberOfTimes: 'once',
+      }],
+    },
+    {
+      name: 'Crown of Woe',
+      description: '',
+      actions: [{
+        name: 'Crown of Woe',
+        description: '',
+        actionDetails: {
+          actionType: 'passive',
+          effect: 'Subtract 2 from the control scores of enemy units while they are within 9" of this unit.'
+        },
+        phaseActivation: BattlePhase.END, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
       }],
     },
   ],
   spellLore: [
     {
       name: 'Lore of Shadows',
-      description: 'Bend darkness to conceal your warriors.',
-      actions: [{
-        name: 'Mindrazor',
-        description: 'Spell Lore: Lore of Shadows',
-        actionDetails: {
-          actionType: 'activated',
-          declare: 'Pick a friendly Wizard to cast this spell, pick a friendly unit wholly within 12" as the target.',
-          effect: 'If cast, improve the Rend of the target\'s melee weapons by 1 until your next hero phase.'
+      description: '',
+      actions: [
+        {
+          name: 'Steed of Shadows',
+          description: 'Spell Lore: Lore of Shadows',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly DoK Wizard to cast this spell, pick a visible friendly DoK unit wholly within 12" of them to be the target, then make a casting roll of 2D6.',
+            effect: 'The target can use Charge abilities this turn even if it used a Run ability in the same turn.'
+          },
+          castingValue: 5,
+          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
         },
-        castingValue: 7,
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }],
-    },
-    {
-      name: 'Lore of Khaine',
-      description: 'Prayers of bloodshed and vengeance.',
-      actions: [{
-        name: 'Catechism of Murder',
-        description: 'Prayer Lore: Lore of Khaine',
-        actionDetails: {
-          actionType: 'activated',
-          declare: 'Pick a friendly Priest to chant this prayer, pick a friendly unit wholly within 12" as the target.',
-          effect: 'If answered, add 1 to wound rolls for the target\'s melee attacks until your next hero phase.'
+        {
+          name: 'Doomfire',
+          description: 'Spell Lore: Lore of Shadows',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly DoK Wizard to cast this spell, pick a visible enemy unit within 12" of them to be the target, then make a casting roll of 2D6.',
+            effect: 'If the target unit has fewer than 10 models, inflict D3 mortal damage on the target. If the target unit has 10-19 models, inflict D6 mortal damage on the target. If the target unit has 10-19 models, inflict D6 mortal damage on the target. If the target unit has 20 or more models, inflict 6 mortal damage on the target.'
+          },
+          castingValue: 7,
+          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
         },
-        chantingValue: 4,
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }],
+        {
+          name: 'Mindrazor',
+          description: 'Spell Lore: Lore of Shadows',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly DoK Wizard to cast this spell, pick a visible friendly DoK unit wholly within 12" of them to be the target, then make a casting roll of 2D6.',
+            effect: 'Add 1 to the Rend characteristics of the target\'s melee weapons until the start of your next turn. In addition, if the target charged this turn, add 1 to the Damage characteristic of its melee weapons until the start of your next turn.'
+          },
+          castingValue: 7,
+          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
+        }
+      ],
     },
   ],
   prayerLore: [
     {
-      name: 'Prayers of the Bloody Handed',
-      description: 'Invoke Khaine\'s wrath upon the battlefield.',
-      actions: [{
-        name: 'Rune of Khaine',
-        description: 'Prayer Lore: Prayers of the Bloody Handed',
-        actionDetails: {
-          actionType: 'activated',
-          declare: 'Pick a friendly Priest to chant this prayer, pick a friendly Daughters of Khaine unit wholly within 12" as the target.',
-          effect: 'If answered, add 1 to the Attacks characteristic of the target\'s melee weapons until your next hero phase.'
+      name: 'Prayers of the Khainite Cult',
+      description: '',
+      actions: [
+        {
+          name: 'Sacrament of Blood',
+          description: 'Prayer Lore: Prayers of the Khainite Cult',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly DoK Priest to chant this prayer, pick a visible friendly DoK unit wholly within 12" of them to be the target, then make a chanting roll of D6.',
+            effect: 'Until the start of your next turn, add 1 to the current battle round number when determining which effects of the \'Blood Rites\' ability apply to the target. If the chanting roll was 10+, until the start of your next turn, treat the current battle round number as 5 when determining which effects of the \'Blood Rites\' ability apply to the target instead.'
+          },
+          chantingValue: 5,
+          phaseActivation: BattlePhase.HERO,
+          phaseActivationTiming: 'own',
+          numberOfTimes: 'perRound',
         },
-        chantingValue: 4,
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }],
-    },
-    {
-      name: 'Prayers of the Slaughter Queen',
-      description: 'Dark prayers that drive warriors into a murderous frenzy.',
-      actions: [{
-        name: 'Crimson Rejuvenation',
-        description: 'Prayer Lore: Prayers of the Slaughter Queen',
-        actionDetails: {
-          actionType: 'activated',
-          declare: 'Pick a friendly Priest to chant this prayer, pick a friendly Daughters of Khaine Hero within 12" as the target.',
-          effect: 'If answered, Heal (D6) the target.'
+        {
+          name: 'Martyr\'s Sacrifice',
+          description: 'Prayer Lore: Prayers of the Khainite Cult',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly DoK Priest to chant this prayer, pick a visible friendly DoK unit wholly within 12" of them to be the target, then make a chanting roll of D6.',
+            effect: 'Until the start of your next turn, each time a model in the target unit is slain by a combat attack, before removing the model from play, pick an enemy unit in combat with the target and roll a dice. If the chanting roll was 8+, roll 2 dice instead of 1. For each 5+, inflict 1 mortal damage on that enemy unit after the Fight ability has been resolved.'
+          },
+          chantingValue: 4,
+          phaseActivation: BattlePhase.HERO,
+          phaseActivationTiming: 'own',
+          numberOfTimes: 'perRound',
         },
-        chantingValue: 4,
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-      }],
+        {
+          name: 'Covenant of the Iron Heart',
+          description: 'Prayer Lore: Prayers of the Khainite Cult',
+          actionDetails: {
+            actionType: 'activated',
+            declare: 'Pick a friendly DoK Priest to chant this prayer, pick a visible friendly DoK unit wholly within 12" of them to be the target, then make a chanting roll of D6.',
+            effect: 'Ignore negative modifiers to the target\'s control score until the start of your next turn. In addition, if the chanting roll was 8+, add 5 to the target\'s control score until the start of your next turn.'
+          },
+          chantingValue: 4,
+          phaseActivation: BattlePhase.HERO,
+          phaseActivationTiming: 'own',
+          numberOfTimes: 'perRound',
+        }
+      ],
     },
   ],
 };
@@ -2853,7 +3051,7 @@ export class HomeComponent implements AfterViewInit {
     const actions = this.army.units[0]?.actions ?? [];
     return actions
       .filter(a => ASTERISM_NAMES.has(a.name) && !this.activeAsterisms.has(a.name))
-      .map(a => ({ name: a.name, effect: a.actionDetails.effect }));
+      .map(a => ({name: a.name, effect: a.actionDetails.effect}));
   }
 
   selectAsterism(name: string): void {

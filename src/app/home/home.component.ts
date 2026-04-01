@@ -213,6 +213,19 @@ const CORE_ABILITIES: BattleAction[] = [
     phaseActivationTiming: 'any',
     numberOfTimes: 'perRound',
   },
+  {
+    name: 'Tactical Gambit',
+    description: '',
+    actionDetails: {
+      actionType: 'activated',
+      declare: 'You cannot use this ability if you went second in the previous battle round and chose to go first in the current battle round',
+      effect: 'Pick 1 battle tactic that you have not yet attempted. You can attempt to complete that battle tactic this turn.',
+    },
+    phaseActivation: BattlePhase.START,
+    phaseActivationTiming: 'own',
+    numberOfTimes: 'perRound',
+    armyWide: true,
+  },
 ];
 
 function cloneAction(action: BattleAction): BattleAction {
@@ -256,6 +269,18 @@ const STANDARD_BEARER_ABILITY: BattleAction = {
   actionDetails: {
     actionType: 'passive',
     effect: 'While this unit contains any standard bearers, add 1 to this unit\'s control score.',
+  },
+  phaseActivation: BattlePhase.END,
+  phaseActivationTiming: 'any',
+  numberOfTimes: 'unlimited',
+};
+
+const CHAMPION_ABILITY: BattleAction = {
+  name: 'Champion',
+  description: '',
+  actionDetails: {
+    actionType: 'passive',
+    effect: 'Add 1 to the attack characteristics of weapons used by champions in this unit.',
   },
   phaseActivation: BattlePhase.END,
   phaseActivationTiming: 'any',
@@ -331,6 +356,9 @@ function withCoreAbilities(army: Army): Army {
       }
       if (unit.keywords.includes('Standard Bearer') && !existing.has('standard bearer')) {
         extras.push(cloneAction(STANDARD_BEARER_ABILITY));
+      }
+      if (unit.keywords.includes('Champion') && !existing.has('champion')) {
+        extras.push(cloneAction(CHAMPION_ABILITY));
       }
       if (unitIsWizard(unit) && !existing.has('unbind')) {
         extras.push(cloneAction(UNBIND_ABILITY));

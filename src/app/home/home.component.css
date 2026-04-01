@@ -281,7 +281,7 @@
   font-family: "Cinzel", serif;
   font-weight: 700;
   font-size: 0.85rem;
-  color: var(--3c-2);
+  color: black;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin: 0 0 0.6em;
@@ -337,6 +337,29 @@
 .asterism-effect {
   font-size: 0.8rem;
   line-height: 1.35;
+}
+
+/* ===== Unit Grid ===== */
+.active-tactic-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  padding: 0.9em 1.1em;
+  border: 2px solid var(--3c5);
+  background: #faf3e6;
+  border-radius: 6px;
+}
+
+.active-tactic-name {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.active-tactic-desc {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  margin: 0;
 }
 
 /* ===== Unit Grid ===== */

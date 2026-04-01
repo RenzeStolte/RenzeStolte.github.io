@@ -65,7 +65,11 @@
     } @else if (stage.type === 'deployment') {
       <p class="turn-note">Set up units and use any deployment abilities before choosing priority.</p>
     } @else if (stage.type === 'startActions') {
-      <p class="turn-note">Resolve start of battle round abilities before the first turn begins.</p>
+      @if (stage.playerIndex === 0) {
+        <p class="turn-note">Resolve start of battle round abilities before the first turn begins.</p>
+      } @else {
+        <p class="turn-note">Resolve start of turn abilities before your hero phase.</p>
+      }
     } @else if (stage.type === 'turn') {
       <div class="turn-indicator">
         <span class="turn-badge" [class.own]="isOwnTurn" [class.opponent]="!isOwnTurn">
@@ -101,6 +105,31 @@
     </div>
   }
 
+  @if (tacticPickerVisible) {
+    <div class="army-actions">
+      <h3 class="army-actions-title">Tactical Gambit — Choose a Battle Tactic</h3>
+      <p class="asterism-hint">Pick 1 battle tactic to attempt this turn. Each tactic can only be chosen once per battle.</p>
+      <div class="asterism-picker">
+        @for (tactic of availableBattleTactics; track tactic.name) {
+          <button class="asterism-btn" (click)="selectBattleTactic(tactic)">
+            <span class="asterism-name">{{ tactic.name }}</span>
+            <span class="asterism-effect">{{ tactic.description }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  }
+
+  @if (activeBattleTactic) {
+    <div class="army-actions">
+      <h3 class="army-actions-title">Active Battle Tactic</h3>
+      <div class="active-tactic-card">
+        <span class="active-tactic-name">{{ activeBattleTactic.name }}</span>
+        <p class="active-tactic-desc">{{ activeBattleTactic.description }}</p>
+      </div>
+    </div>
+  }
+
   @if (armyWideActions.length > 0) {
     <div class="army-actions">
       <h3 class="army-actions-title">Army Abilities</h3>
@@ -108,10 +137,11 @@
         @for (action of armyWideActions; track action.name) {
           <app-action-card
             [action]="action"
-            [used]="false"
-            [clickable]="false"
+            [used]="action.name === 'Tactical Gambit' && (!!activeBattleTactic || showTacticPicker)"
+            [clickable]="action.name === 'Tactical Gambit' && !activeBattleTactic && !showTacticPicker && isOwnStartPhase"
             [defaultCoreExpanded]="true"
-            [showCoreToggle]="false">
+            [showCoreToggle]="false"
+            (actionToggle)="action.name === 'Tactical Gambit' ? activateTacticalGambit() : null">
           </app-action-card>
         }
       </div>

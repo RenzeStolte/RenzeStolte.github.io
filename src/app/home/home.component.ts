@@ -381,7 +381,7 @@ function withCoreAbilities(army: Army): Army {
 type RoundStage =
   | { type: 'deployment' }
   | { type: 'start' }
-  | { type: 'startActions' }
+  | { type: 'startActions'; playerIndex: 0 | 1 }
   | { type: 'turn'; playerIndex: 0 | 1; phaseIndex: number }
   | { type: 'end' };
 
@@ -391,6 +391,39 @@ const ASTERISM_NAMES = new Set([
   'Sotek the deliverer',
   'Tepok the Seer',
 ]);
+
+const BATTLE_TACTICS: {name: string; description: string}[] = [
+  {
+    name: 'DO NOT WAVER',
+    description:
+      'You complete this battle tactic at the end of your turn if 2 or more friendly units fought this turn and no friendly units were destroyed this turn.',
+  },
+  {
+    name: 'SLAY THE ENTOURAGE',
+    description:
+      "Pick a unit in the enemy general's regiment. You complete this battle tactic if that unit is destroyed this turn.",
+  },
+  {
+    name: 'ATTACK ON TWO FRONTS',
+    description:
+      'You complete this battle tactic at the end of your turn if you control 2 or more objectives that you did not control at the start of your turn and at least 1 of those objectives was controlled by your opponent at the start of your turn.',
+  },
+  {
+    name: 'TAKE THEIR LAND',
+    description:
+      'Pick a terrain feature wholly or partially within enemy territory and wholly outside friendly territory. You complete this battle tactic if you control that terrain feature at the end of your turn.',
+  },
+  {
+    name: 'SEIZE THE CENTRE',
+    description:
+      'You complete this battle tactic at the end of your turn if 2 or more friendly units are within 3" of the centre of the battlefield and are not in combat.',
+  },
+  {
+    name: 'TAKE THE FLANKS',
+    description:
+      'You complete this battle tactic at the end of your turn if you have at least 1 friendly unit within 6" of each short battlefield edge, none of those units are wholly within friendly territory, and none of those units were set up this turn.',
+  },
+];
 
 const STORMCAST_ARMY: Army = {
   name: 'Hammers of Sigmar',
@@ -2956,8 +2989,15 @@ export class HomeComponent implements AfterViewInit {
   private commandUsedBy = new Map<string, string>();
   /** Maps unit name → command name (each unit can use 1 command per phase) */
   private unitCommandUsed = new Map<string, string>();
+  /** Maps spell name → unit name (each spell cast by at most 1 Wizard per turn) */
+  private spellUsedBy = new Map<string, string>();
+  /** Maps prayer name → unit name (each prayer chanted by at most 1 Priest per turn) */
+  private prayerUsedBy = new Map<string, string>();
   warscrollUnit: Unit | null = null;
   activeAsterisms = new Set<string>();
+  activeBattleTactic: {name: string; description: string} | null = null;
+  showTacticPicker = false;
+  readonly usedBattleTactics = new Set<string>();
 
   @ViewChild('phaseBar') private phaseBarRef?: ElementRef<HTMLDivElement>;
   phaseBarOverflowLeft = false;
@@ -3041,9 +3081,18 @@ export class HomeComponent implements AfterViewInit {
     return isFirstPlayer ? this.firstTurnIsOwn : !this.firstTurnIsOwn;
   }
 
+  get isOwnStartPhase(): boolean {
+    if (this.stage.type !== 'startActions') return false;
+    return this.stage.playerIndex === 0 ? this.firstTurnIsOwn : !this.firstTurnIsOwn;
+  }
+
   get currentPhaseLabel(): string {
     if (this.stage.type === 'deployment') return 'Deployment Phase';
-    if (this.stage.type === 'start' || this.stage.type === 'startActions') return 'Start of Battle Round';
+    if (this.stage.type === 'start' || this.stage.type === 'startActions') {
+      return this.stage.type === 'startActions' && this.stage.playerIndex === 1
+        ? 'Start of Turn'
+        : 'Start of Battle Round';
+    }
     if (this.stage.type === 'end') return 'Battle Round Complete';
     return TURN_PHASES[this.stage.phaseIndex].label;
   }
@@ -3070,7 +3119,7 @@ export class HomeComponent implements AfterViewInit {
     const hasGreatPlan = this.army.units[0]?.actions.some(a => a.name === 'The Great Plan');
     if (!hasGreatPlan) return null;
     if (this.stage.type === 'deployment' && this.activeAsterisms.size === 0) return 'great-plan';
-    if (this.stage.type === 'startActions' && this.battleRound >= 3 && this.activeAsterisms.size === 1) return 'further';
+    if (this.stage.type === 'startActions' && this.stage.playerIndex === 0 && this.battleRound >= 3 && this.activeAsterisms.size === 1) return 'further';
     return null;
   }
 
@@ -3084,6 +3133,25 @@ export class HomeComponent implements AfterViewInit {
 
   selectAsterism(name: string): void {
     this.activeAsterisms.add(name);
+  }
+
+  get tacticPickerVisible(): boolean {
+    return this.showTacticPicker;
+  }
+
+  get availableBattleTactics(): {name: string; description: string}[] {
+    return BATTLE_TACTICS.filter(t => !this.usedBattleTactics.has(t.name));
+  }
+
+  activateTacticalGambit(): void {
+    if (this.activeBattleTactic || this.showTacticPicker) return;
+    this.showTacticPicker = true;
+  }
+
+  selectBattleTactic(tactic: {name: string; description: string}): void {
+    this.activeBattleTactic = tactic;
+    this.usedBattleTactics.add(tactic.name);
+    this.showTacticPicker = false;
   }
 
   /** Progress bar: all steps in the round for visualization */
@@ -3102,11 +3170,21 @@ export class HomeComponent implements AfterViewInit {
     steps.push({
       label: 'Start',
       key: 'start',
-      active: this.stage.type === 'start' || this.stage.type === 'startActions',
-      completed: this.stage.type === 'turn' || this.stage.type === 'end',
+      active: this.stage.type === 'start' || (this.stage.type === 'startActions' && this.stage.playerIndex === 0),
+      completed: this.stage.type === 'turn' || this.stage.type === 'end' || (this.stage.type === 'startActions' && this.stage.playerIndex === 1),
     });
 
     for (let p = 0; p < 2; p++) {
+      if (p === 1) {
+        const isPlayer1Own = !this.firstTurnIsOwn;
+        const player1Tag = isPlayer1Own ? 'Your' : "Opponent's";
+        steps.push({
+          label: `${player1Tag} Start Phase`,
+          key: 'start-player1',
+          active: this.stage.type === 'startActions' && this.stage.playerIndex === 1,
+          completed: (this.stage.type === 'turn' && this.stage.playerIndex === 1) || this.stage.type === 'end',
+        });
+      }
       for (let i = 0; i < TURN_PHASES.length; i++) {
         const isOwn = p === 0 ? this.firstTurnIsOwn : !this.firstTurnIsOwn;
         const playerTag = isOwn ? 'Your' : "Opponent's";
@@ -3118,6 +3196,8 @@ export class HomeComponent implements AfterViewInit {
           if (this.stage.playerIndex === p && this.stage.phaseIndex === i) active = true;
           if (this.stage.playerIndex > p || (this.stage.playerIndex === p && this.stage.phaseIndex > i)) completed = true;
         } else if (this.stage.type === 'end') {
+          completed = true;
+        } else if (this.stage.type === 'startActions' && this.stage.playerIndex === 1 && p === 0) {
           completed = true;
         }
 
@@ -3142,7 +3222,7 @@ export class HomeComponent implements AfterViewInit {
 
   pickPriority(ownFirst: boolean): void {
     this.firstTurnIsOwn = ownFirst;
-    this.stage = {type: 'startActions'};
+    this.stage = {type: 'startActions', playerIndex: 0};
   }
 
   adjustCommandPoints(delta: number): void {
@@ -3159,10 +3239,15 @@ export class HomeComponent implements AfterViewInit {
     if (stepKey === 'start') {
       // If already past priority pick, go to start actions; otherwise priority picker
       if (this.stage.type === 'turn' || this.stage.type === 'end' || this.stage.type === 'startActions') {
-        this.stage = {type: 'startActions'};
+        this.stage = {type: 'startActions', playerIndex: 0};
       } else {
         this.stage = {type: 'start'};
       }
+      return;
+    }
+
+    if (stepKey === 'start-player1') {
+      this.stage = {type: 'startActions', playerIndex: 1};
       return;
     }
 
@@ -3213,7 +3298,9 @@ export class HomeComponent implements AfterViewInit {
 
     if (this.stage.type === 'startActions') {
       this.usedThisTurn.clear();
-      this.stage = {type: 'turn', playerIndex: 0, phaseIndex: 0};
+      this.spellUsedBy.clear();
+      this.prayerUsedBy.clear();
+      this.stage = {type: 'turn', playerIndex: this.stage.playerIndex, phaseIndex: 0};
       return;
     }
 
@@ -3223,11 +3310,14 @@ export class HomeComponent implements AfterViewInit {
         // Next phase within same player's turn
         this.stage = {type: 'turn', playerIndex: this.stage.playerIndex, phaseIndex: nextPhaseIdx};
       } else if (this.stage.playerIndex === 0) {
-        // First player done → start second player's turn from Hero phase
-        this.usedThisTurn.clear();
-        this.stage = {type: 'turn', playerIndex: 1, phaseIndex: 0};
+        // First player done → second player's start phase
+        this.activeBattleTactic = null;
+        this.showTacticPicker = false;
+        this.stage = {type: 'startActions', playerIndex: 1};
       } else {
         // Second player done → end of round
+        this.activeBattleTactic = null;
+        this.showTacticPicker = false;
         this.stage = {type: 'end'};
       }
       return;
@@ -3237,6 +3327,8 @@ export class HomeComponent implements AfterViewInit {
       // New battle round
       this.battleRound++;
       this.usedThisTurn.clear();
+      this.spellUsedBy.clear();
+      this.prayerUsedBy.clear();
       this.commandPoints += 3;
       this.stage = {type: 'start'};
     }
@@ -3262,7 +3354,12 @@ export class HomeComponent implements AfterViewInit {
     }
 
     if (this.stage.type === 'startActions') {
-      this.stage = {type: 'start'};
+      if (this.stage.playerIndex === 0) {
+        this.stage = {type: 'start'};
+      } else {
+        // Back to first player's last phase
+        this.stage = {type: 'turn', playerIndex: 0, phaseIndex: TURN_PHASES.length - 1};
+      }
       return;
     }
 
@@ -3270,11 +3367,11 @@ export class HomeComponent implements AfterViewInit {
       if (this.stage.phaseIndex > 0) {
         this.stage = {type: 'turn', playerIndex: this.stage.playerIndex, phaseIndex: this.stage.phaseIndex - 1};
       } else if (this.stage.playerIndex === 1) {
-        // Back to first player's last phase
-        this.stage = {type: 'turn', playerIndex: 0, phaseIndex: TURN_PHASES.length - 1};
+        // Back to second player's start phase
+        this.stage = {type: 'startActions', playerIndex: 1};
       } else {
         // Back to start actions
-        this.stage = {type: 'startActions'};
+        this.stage = {type: 'startActions', playerIndex: 0};
       }
       return;
     }
@@ -3283,7 +3380,8 @@ export class HomeComponent implements AfterViewInit {
   get nextButtonLabel(): string {
     if (this.stage.type === 'deployment') return 'Start of Battle Round →';
     if (this.stage.type === 'startActions') {
-      const who = this.firstTurnIsOwn ? 'Your' : "Opponent's";
+      const isOwnStart = this.stage.playerIndex === 0 ? this.firstTurnIsOwn : !this.firstTurnIsOwn;
+      const who = isOwnStart ? 'Your' : "Opponent's";
       return `${who} Hero Phase →`;
     }
     if (this.stage.type === 'end') return 'New Battle Round →';
@@ -3294,7 +3392,7 @@ export class HomeComponent implements AfterViewInit {
       }
       if (this.stage.playerIndex === 0) {
         const who = this.firstTurnIsOwn ? "Opponent's" : 'Your';
-        return `${who} Turn →`;
+        return `${who} Start Phase →`;
       }
       return 'End of Round →';
     }
@@ -3320,7 +3418,12 @@ export class HomeComponent implements AfterViewInit {
       if (action.showAllPhases && this.stage.type !== 'turn') return false;
 
       if (this.stage.type !== 'turn') {
-        return action.phaseActivationTiming !== 'opponent';
+        if (this.stage.type === 'startActions') {
+          if (action.phaseActivationTiming === 'own' && !this.isOwnStartPhase) return false;
+          if (action.phaseActivationTiming === 'opponent' && this.isOwnStartPhase) return false;
+        } else {
+          return action.phaseActivationTiming !== 'opponent';
+        }
       }
 
       if (action.phaseActivationTiming === 'own' && !this.isOwnTurn) return false;
@@ -3352,6 +3455,10 @@ export class HomeComponent implements AfterViewInit {
       if (this.stage.type !== 'turn' && this.stage.type !== 'startActions') {
         return action.phaseActivationTiming !== 'opponent';
       }
+      if (this.stage.type === 'startActions') {
+        if (action.phaseActivationTiming === 'own' && !this.isOwnStartPhase) return false;
+        if (action.phaseActivationTiming === 'opponent' && this.isOwnStartPhase) return false;
+      }
       if (this.stage.type === 'turn') {
         if (action.phaseActivationTiming === 'own' && !this.isOwnTurn) return false;
         if (action.phaseActivationTiming === 'opponent' && this.isOwnTurn) return false;
@@ -3382,6 +3489,20 @@ export class HomeComponent implements AfterViewInit {
       if (this.unitCommandUsed.has(unit.name) && this.unitCommandUsed.get(unit.name) !== action.name) return false;
     }
 
+    if (action.castingValue !== undefined) {
+      // Already cast by this unit → allow toggling off
+      if (this.spellUsedBy.get(action.name) === unit.name) return true;
+      // Same spell already cast by a different Wizard this turn
+      if (this.spellUsedBy.has(action.name)) return false;
+    }
+
+    if (action.chantingValue !== undefined) {
+      // Already chanted by this unit → allow toggling off
+      if (this.prayerUsedBy.get(action.name) === unit.name) return true;
+      // Same prayer already chanted by a different Priest this turn
+      if (this.prayerUsedBy.has(action.name)) return false;
+    }
+
     return true;
   }
 
@@ -3391,6 +3512,9 @@ export class HomeComponent implements AfterViewInit {
     if (action.isCommand) {
       return this.commandUsedBy.get(action.name) === unit.name;
     }
+
+    if (action.castingValue !== undefined && this.spellUsedBy.has(action.name)) return true;
+    if (action.chantingValue !== undefined && this.prayerUsedBy.has(action.name)) return true;
 
     // For linked groups, check by group key (any unit in group counts)
     if (action.linkedGroup) {
@@ -3418,6 +3542,24 @@ export class HomeComponent implements AfterViewInit {
         this.unitCommandUsed.set(unit.name, action.name);
       }
       return;
+    }
+
+    if (action.castingValue !== undefined) {
+      if (this.spellUsedBy.get(action.name) === unit.name) {
+        this.spellUsedBy.delete(action.name);
+      } else {
+        this.spellUsedBy.set(action.name, unit.name);
+      }
+      // Also track per-unit usage via the normal path below
+    }
+
+    if (action.chantingValue !== undefined) {
+      if (this.prayerUsedBy.get(action.name) === unit.name) {
+        this.prayerUsedBy.delete(action.name);
+      } else {
+        this.prayerUsedBy.set(action.name, unit.name);
+      }
+      // Also track per-unit usage via the normal path below
     }
 
     // Linked group: toggle a single shared key for the whole group

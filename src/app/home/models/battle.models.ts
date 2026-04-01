@@ -33,6 +33,10 @@ export interface BattleAction {
   isCommand?: boolean;
   armyWide?: boolean;
   unitFilter?: string[];
+  /** Show this action in every phase, not just its phaseActivation */
+  showAllPhases?: boolean;
+  /** When toggled, all actions sharing this group across all units are toggled together */
+  linkedGroup?: string;
 }
 
 export interface WeaponProfile {
@@ -115,6 +119,7 @@ export const TURN_PHASES: PhaseStep[] = [
   { phase: BattlePhase.SHOOTING, label: 'Shooting Phase' },
   { phase: BattlePhase.CHARGE, label: 'Charge Phase' },
   { phase: BattlePhase.ATTACK, label: 'Combat Phase' },
+  { phase: BattlePhase.END, label: 'End Phase' },
 ];
 
 export const PHASE_LABELS: Record<BattlePhase, string> = {
@@ -125,5 +130,5 @@ export const PHASE_LABELS: Record<BattlePhase, string> = {
   [BattlePhase.SHOOTING]: 'Shooting Phase',
   [BattlePhase.CHARGE]: 'Charge Phase',
   [BattlePhase.ATTACK]: 'Combat Phase',
-  [BattlePhase.END]: 'End of Battle Round',
+  [BattlePhase.END]: 'End Phase',
 };

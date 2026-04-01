@@ -327,6 +327,13 @@ type RoundStage =
   | { type: 'turn'; playerIndex: 0 | 1; phaseIndex: number }
   | { type: 'end' };
 
+const ASTERISM_NAMES = new Set([
+  'Itzl the Tamer',
+  'Quetzl the Preserver',
+  'Sotek the deliverer',
+  'Tepok the Seer',
+]);
+
 const STORMCAST_ARMY: Army = {
   name: 'Hammers of Sigmar',
   faction: 'Stormcast Eternals',
@@ -421,6 +428,8 @@ const STORMCAST_ARMY: Army = {
           phaseActivation: BattlePhase.START,
           phaseActivationTiming: 'any',
           numberOfTimes: 'perRound',
+          showAllPhases: true,
+          linkedGroup: 'ruination-chamber',
         },
         {
           name: 'Sense Unholy Sorcery',
@@ -474,6 +483,8 @@ const STORMCAST_ARMY: Army = {
           phaseActivation: BattlePhase.START,
           phaseActivationTiming: 'any',
           numberOfTimes: 'perRound',
+          showAllPhases: true,
+          linkedGroup: 'ruination-chamber',
         },
         {
           name: 'Memorian',
@@ -537,6 +548,8 @@ const STORMCAST_ARMY: Army = {
           phaseActivation: BattlePhase.START,
           phaseActivationTiming: 'any',
           numberOfTimes: 'perRound',
+          showAllPhases: true,
+          linkedGroup: 'ruination-chamber',
         },
         {
           name: 'Deliver Judgement',
@@ -631,6 +644,8 @@ const STORMCAST_ARMY: Army = {
           phaseActivation: BattlePhase.START,
           phaseActivationTiming: 'any',
           numberOfTimes: 'perRound',
+          showAllPhases: true,
+          linkedGroup: 'ruination-chamber',
         },
         {
           name: 'Heralds of Righteousness',
@@ -684,6 +699,8 @@ const STORMCAST_ARMY: Army = {
           phaseActivation: BattlePhase.START,
           phaseActivationTiming: 'any',
           numberOfTimes: 'perRound',
+          showAllPhases: true,
+          linkedGroup: 'ruination-chamber',
         },
         {
           name: 'Memorian Descendants',
@@ -1589,6 +1606,7 @@ const STORMCAST_OPTIONS: ArmyOptions = {
           phaseActivation: BattlePhase.MOVEMENT,
           phaseActivationTiming: 'own',
           numberOfTimes: 'unlimited',
+          armyWide: true
         },
         {
           name: 'Heavens-sent',
@@ -1797,23 +1815,6 @@ const STORMCAST_OPTIONS: ArmyOptions = {
     },
   ],
   spellLore: [
-    {
-      name: 'Lore of the Storm',
-      description: 'Harness Sigmar\'s lightning to smite the enemy.',
-      actions: [
-        {
-          name: 'Lightning Blast',
-          description: 'Spell Lore: Lore of the Storm',
-          actionDetails: {
-            actionType: 'activated',
-            declare: 'Pick a friendly Wizard to cast this spell, then pick the closest visible enemy unit to them that has not been picked to be the target of this ability this turn to be the target. If 2 or more visible enemy units are tied to be the closest, you can pick which is the target. Then, make a casting roll of 2D6.',
-            effect: 'Inflict D3 mortal damage on the target.'
-          },
-          castingValue: 5,
-          phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'own', numberOfTimes: 'perRound',
-        }
-      ],
-    },
     {
       name: 'Lore of the Storm',
       description: 'Harness Sigmar\'s lightning to smite the enemy.',
@@ -2724,12 +2725,13 @@ export class HomeComponent implements AfterViewInit {
   firstTurnIsOwn = true;
 
   private usedOnce = new Set<string>();
-  private usedThisRound = new Set<string>();
+  private usedThisTurn = new Set<string>();
   /** Maps command name → unit name (each command used once per army per phase) */
   private commandUsedBy = new Map<string, string>();
   /** Maps unit name → command name (each unit can use 1 command per phase) */
   private unitCommandUsed = new Map<string, string>();
   warscrollUnit: Unit | null = null;
+  activeAsterisms = new Set<string>();
 
   @ViewChild('phaseBar') private phaseBarRef?: ElementRef<HTMLDivElement>;
   phaseBarOverflowLeft = false;
@@ -2816,7 +2818,7 @@ export class HomeComponent implements AfterViewInit {
   get currentPhaseLabel(): string {
     if (this.stage.type === 'deployment') return 'Deployment Phase';
     if (this.stage.type === 'start' || this.stage.type === 'startActions') return 'Start of Battle Round';
-    if (this.stage.type === 'end') return 'End of Battle Round';
+    if (this.stage.type === 'end') return 'Battle Round Complete';
     return TURN_PHASES[this.stage.phaseIndex].label;
   }
 
@@ -2835,6 +2837,27 @@ export class HomeComponent implements AfterViewInit {
   get playerLabel(): string {
     if (this.stage.type !== 'turn') return '';
     return this.isOwnTurn ? 'Your Turn' : "Opponent's Turn";
+  }
+
+  get asterismPickerMode(): 'great-plan' | 'further' | null {
+    if (!this.army) return null;
+    const hasGreatPlan = this.army.units[0]?.actions.some(a => a.name === 'The Great Plan');
+    if (!hasGreatPlan) return null;
+    if (this.stage.type === 'deployment' && this.activeAsterisms.size === 0) return 'great-plan';
+    if (this.stage.type === 'startActions' && this.battleRound >= 3 && this.activeAsterisms.size === 1) return 'further';
+    return null;
+  }
+
+  get availableAsterisms(): { name: string; effect: string }[] {
+    if (!this.army) return [];
+    const actions = this.army.units[0]?.actions ?? [];
+    return actions
+      .filter(a => ASTERISM_NAMES.has(a.name) && !this.activeAsterisms.has(a.name))
+      .map(a => ({ name: a.name, effect: a.actionDetails.effect }));
+  }
+
+  selectAsterism(name: string): void {
+    this.activeAsterisms.add(name);
   }
 
   /** Progress bar: all steps in the round for visualization */
@@ -2882,7 +2905,7 @@ export class HomeComponent implements AfterViewInit {
     }
 
     steps.push({
-      label: 'End',
+      label: 'Round End',
       key: 'end',
       active: this.stage.type === 'end',
       completed: false,
@@ -2963,6 +2986,7 @@ export class HomeComponent implements AfterViewInit {
     }
 
     if (this.stage.type === 'startActions') {
+      this.usedThisTurn.clear();
       this.stage = {type: 'turn', playerIndex: 0, phaseIndex: 0};
       return;
     }
@@ -2974,6 +2998,7 @@ export class HomeComponent implements AfterViewInit {
         this.stage = {type: 'turn', playerIndex: this.stage.playerIndex, phaseIndex: nextPhaseIdx};
       } else if (this.stage.playerIndex === 0) {
         // First player done → start second player's turn from Hero phase
+        this.usedThisTurn.clear();
         this.stage = {type: 'turn', playerIndex: 1, phaseIndex: 0};
       } else {
         // Second player done → end of round
@@ -2985,7 +3010,7 @@ export class HomeComponent implements AfterViewInit {
     if (this.stage.type === 'end') {
       // New battle round
       this.battleRound++;
-      this.usedThisRound.clear();
+      this.usedThisTurn.clear();
       this.commandPoints += 3;
       this.stage = {type: 'start'};
     }
@@ -3058,12 +3083,15 @@ export class HomeComponent implements AfterViewInit {
   }
 
   get showUnits(): boolean {
-    return this.stage.type === 'turn' || this.stage.type === 'deployment' || this.stage.type === 'end' || this.stage.type === 'startActions';
+    return this.stage.type === 'turn' || this.stage.type === 'deployment' || this.stage.type === 'startActions';
   }
 
   getAvailableActions(unit: Unit): BattleAction[] {
     return unit.actions.filter(action => {
-      if (action.phaseActivation !== this.currentPhase) return false;
+      // Actions with showAllPhases appear in every turn phase
+      if (!action.showAllPhases && action.phaseActivation !== this.currentPhase) return false;
+      // showAllPhases actions only show during turns (not deployment/start/end summary)
+      if (action.showAllPhases && this.stage.type !== 'turn') return false;
 
       if (this.stage.type !== 'turn') {
         return action.phaseActivationTiming !== 'opponent';
@@ -3089,6 +3117,11 @@ export class HomeComponent implements AfterViewInit {
       }
     }
     return actions.filter(action => {
+      // Hide Asterism meta-actions (shown as picker UI instead)
+      if (action.name === 'The Great Plan' || action.name === 'Further the Great Plan') return false;
+      // Hide unselected Asterisms
+      if (ASTERISM_NAMES.has(action.name) && !this.activeAsterisms.has(action.name)) return false;
+
       if (action.phaseActivation !== this.currentPhase) return false;
       if (this.stage.type !== 'turn' && this.stage.type !== 'startActions') {
         return action.phaseActivationTiming !== 'opponent';
@@ -3133,9 +3166,17 @@ export class HomeComponent implements AfterViewInit {
       return this.commandUsedBy.get(action.name) === unit.name;
     }
 
+    // For linked groups, check by group key (any unit in group counts)
+    if (action.linkedGroup) {
+      const groupKey = `linked::${action.linkedGroup}`;
+      if (action.numberOfTimes === 'once') return this.usedOnce.has(groupKey);
+      if (action.numberOfTimes === 'perRound') return this.usedThisTurn.has(groupKey);
+      return false;
+    }
+
     const key = `${unit.name}::${action.name}`;
     if (action.numberOfTimes === 'once') return this.usedOnce.has(key);
-    if (action.numberOfTimes === 'perRound') return this.usedThisRound.has(key);
+    if (action.numberOfTimes === 'perRound') return this.usedThisTurn.has(key);
     return false;
   }
 
@@ -3153,8 +3194,17 @@ export class HomeComponent implements AfterViewInit {
       return;
     }
 
+    // Linked group: toggle a single shared key for the whole group
+    if (action.linkedGroup) {
+      const groupKey = `linked::${action.linkedGroup}`;
+      const set = action.numberOfTimes === 'once' ? this.usedOnce : this.usedThisTurn;
+      if (set.has(groupKey)) set.delete(groupKey);
+      else set.add(groupKey);
+      return;
+    }
+
     const key = `${unit.name}::${action.name}`;
-    const set = action.numberOfTimes === 'once' ? this.usedOnce : this.usedThisRound;
+    const set = action.numberOfTimes === 'once' ? this.usedOnce : this.usedThisTurn;
     if (set.has(key)) set.delete(key);
     else set.add(key);
   }

@@ -294,6 +294,51 @@
   gap: 0.75em;
 }
 
+/* ===== Asterism Picker ===== */
+.asterism-hint {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--2c1);
+  margin: 0 0 0.75em;
+}
+
+.asterism-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 0.75em;
+}
+
+.asterism-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  padding: 0.9em 1.1em;
+  border: 2px solid var(--3c5);
+  background: #faf3e6;
+  color: black;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, color 0.15s, transform 0.1s;
+}
+
+.asterism-btn:hover {
+  background: var(--3c5);
+  color: white;
+  transform: scale(1.02);
+}
+
+.asterism-name {
+  font-family: "Cinzel", serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.asterism-effect {
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
 /* ===== Unit Grid ===== */
 .units-grid {
   display: grid;

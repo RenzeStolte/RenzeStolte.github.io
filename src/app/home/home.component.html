@@ -80,6 +80,27 @@
     }
   </div>
 
+  @if (asterismPickerMode) {
+    <div class="army-actions">
+      <h3 class="army-actions-title">
+        {{ asterismPickerMode === 'great-plan' ? 'The Great Plan — Choose an Asterism' : 'Further the Great Plan — Choose Another Asterism' }}
+      </h3>
+      <p class="asterism-hint">
+        {{ asterismPickerMode === 'great-plan'
+          ? 'Pick one Asterism ability to use for the rest of the battle.'
+          : 'Pick a different Asterism ability to use in addition to your first choice.' }}
+      </p>
+      <div class="asterism-picker">
+        @for (asterism of availableAsterisms; track asterism.name) {
+          <button class="asterism-btn" (click)="selectAsterism(asterism.name)">
+            <span class="asterism-name">{{ asterism.name }}</span>
+            <span class="asterism-effect">{{ asterism.effect }}</span>
+          </button>
+        }
+      </div>
+    </div>
+  }
+
   @if (armyWideActions.length > 0) {
     <div class="army-actions">
       <h3 class="army-actions-title">Army Abilities</h3>

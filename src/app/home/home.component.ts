@@ -2122,28 +2122,14 @@ const SKAVEN_OPTIONS: ArmyOptions = {
   ],
   heroicTraits: [
     {
-      name: 'Cunning Deceiver',
-      description: 'This hero is a master of treachery.',
+      name: 'Skilled Manipulator',
+      description: '.',
       actions: [{
-        name: 'Cunning Deceiver',
-        description: 'Heroic Trait',
-        actionDetails: {
-          actionType: 'activated',
-          declare: 'Pick this unit after it is targeted by an attack.',
-          effect: 'Pick a friendly unit within 3" of this unit. That unit becomes the target instead.'
-        },
-        phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'opponent', numberOfTimes: 'once',
-      }],
-    },
-    {
-      name: 'Verminous Valour',
-      description: 'This hero uses underlings as living shields.',
-      actions: [{
-        name: 'Verminous Valour',
+        name: 'Skilled Manipulator',
         description: 'Heroic Trait',
         actionDetails: {
           actionType: 'passive',
-          effect: 'Roll a dice each time this unit would be allocated a wound or mortal wound while within 3" of a friendly Skaven unit with 3+ models. On a 4+, that wound is allocated to that unit instead.'
+          effect: 'While this unit is within the combat range of a friendly non-Hero Skaven Infantry unit: This unit has Ward (4+). This unit has Ward (4+). Each time you make a successful ward roll for this unit, allocate 1 damage point to a friendly-non Hero Skaven Infantry unit within this units combat range after the damage sequence for this unit has been resolved (ward rolls cannot be made for those damage points).'
         },
         phaseActivation: BattlePhase.ATTACK, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
       }],
@@ -2442,20 +2428,6 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
   ],
   heroicTraits: [
     {
-      name: 'Master of Poisons',
-      description: '',
-      actions: [{
-        name: 'Master of Poisons',
-        description: 'Heroic Trait',
-        actionDetails: {
-          actionType: 'activated',
-          declare: 'Pick an enemy unit that had any damage points allocated to it this turn by this unit\'s combat attacks to be the target.',
-          effect: 'For the rest of the battle: The target cannot be healed. Slain models cannot be returned to the target unit.'
-        },
-        phaseActivation: BattlePhase.END, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
-      }],
-    },
-    {
       name: 'Bathed in Blood',
       description: '',
       actions: [{
@@ -2467,19 +2439,6 @@ const DAUGHTERS_OPTIONS: ArmyOptions = {
           effect: 'Heal (3) this unit if it is in combat.'
         },
         phaseActivation: BattlePhase.END, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
-      }],
-    },
-    {
-      name: 'Zealous Orator',
-      description: '',
-      actions: [{
-        name: 'Zealous Orator',
-        description: 'Heroic Trait',
-        actionDetails: {
-          actionType: 'passive',
-          effect: 'If a friendly unit wholly within 12" of this unit uses the \'Rally\' command, you can make 3 additional rally rolls of D6.'
-        },
-        phaseActivation: BattlePhase.HERO, phaseActivationTiming: 'any', numberOfTimes: 'unlimited',
       }],
     },
   ],
